@@ -1,0 +1,33 @@
+/*
+ * Filename: c:\CPSC\github\teamgenerator\docker-compose.yml
+ * Path: c:\CPSC\github\teamgenerator
+ * Created Date: Wednesday, August 1st 2018, 11:52:46 pm
+ * Author: Nico
+ * 
+ * Copyright (c) 2018 Your Company
+ */
+
+version: "3"
+
+networks:
+  teamgen-net:
+
+volumes:
+  teamgen-psql-volume
+
+services:
+  psql:
+    restart: always
+    build:
+      context: postgresql
+    container_name: psql
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=api
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    networks:
+      - teamgen-net
+    volumes:
+      - teamgen-psql-volume:/var/lib/posgresql/data
