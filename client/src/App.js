@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import MenuIcon from '@material-ui/icons/Menu';
 import Home from '@material-ui/icons/Home';
 import AssignmentTurnedIn from '@material-ui/icons/AssignmentTurnedIn'; 
