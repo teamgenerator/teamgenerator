@@ -25,7 +25,7 @@ const styles = {
     marginRight: 20,
   },
   listItem: {
-    width: 200,
+    width: 250,
   },
   projectName: {
     padding: 10,
