@@ -18,15 +18,16 @@ volumes:
 services:
   psql:
     restart: always
-    build:
-      context: postgresql
+    image: postgres:10.4
     container_name: psql
     ports:
+      # The first part is to specify which port on the host it should connect to
+      # The second part is where the post is normally exposed in docker in the container
       - "5432:5432"
     environment:
-      - POSTGRES_DB=api
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB: api
+      - POSTGRES_USER: postgres
+      - POSTGRES_PASSWORD: password
     networks:
       - teamgen-net
     volumes:
