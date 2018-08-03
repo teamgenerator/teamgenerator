@@ -1,11 +1,11 @@
-/*
- * Filename: c:\CPSC\github\teamgenerator\docker-compose.yml
- * Path: c:\CPSC\github\teamgenerator
- * Created Date: Wednesday, August 1st 2018, 11:52:46 pm
- * Author: Nico
- * 
- * Copyright (c) 2018 Your Company
- */
+###
+# Filename: c:\CPSC\github\teamgenerator\docker-compose.yml
+# Path: c:\CPSC\github\teamgenerator
+# Created Date: Wednesday, August 1st 2018, 11:52:46 pm
+# Author: Nico
+#
+# Copyright (c) 2018 Your Company
+###
 
 version: "3"
 
@@ -13,21 +13,21 @@ networks:
   teamgen-net:
 
 volumes:
-  teamgen-psql-volume
+  teamgen-psql-volume:
 
 services:
   psql:
     restart: always
-    image: postgres:10.4
+    image: postgres:alpine
     container_name: psql
     ports:
-      # The first part is to specify which port on the host it should connect to
-      # The second part is where the post is normally exposed in docker in the container
+      # The first part: Where it is externally exposed in the host
+      # The second part: Where it is exposed in the container network
       - "5432:5432"
     environment:
-      - POSTGRES_DB: api
-      - POSTGRES_USER: postgres
-      - POSTGRES_PASSWORD: password
+      - POSTGRES_DB="api"
+      - POSTGRES_USER="postgres"
+      - POSTGRES_PASSWORD="password"
     networks:
       - teamgen-net
     volumes:
