@@ -3,6 +3,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Home from '@material-ui/icons/Home';
 import AssignmentTurnedIn from '@material-ui/icons/AssignmentTurnedIn'; 
 import DirectionsRun from '@material-ui/icons/DirectionsRun';
+import { Provider } from 'react-redux';
 import {
   AppBar,
   Toolbar,
@@ -18,6 +19,7 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 import { BrowserRouter, Route } from 'react-router-dom';
 import HomeScreen from './containers/HomeScreen';
+import configureStore from './store';
 
 const styles = {
   menuButton: {
@@ -32,6 +34,9 @@ const styles = {
     marginBottom: 40,
   },
 };
+
+const store = configureStore();
+
 class App extends Component {
 
   constructor(props) {
@@ -72,36 +77,38 @@ class App extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton className={classes.menuButton} onClick={this.handleOpenNavPane} color="inherit" aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
+      <Provider store={store}>
+        <div>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton className={classes.menuButton} onClick={this.handleOpenNavPane} color="inherit" aria-label="Menu">
+                <MenuIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
 
-        <Drawer open={this.state.navPaneOpened} className={classes.drawer} onClose={this.handleCloseNavPane}>
-          <List className={classes.projectName}>
-            <Typography variant="title">Community 1</Typography>
-          </List>
-          <Divider />
+          <Drawer open={this.state.navPaneOpened} className={classes.drawer} onClose={this.handleCloseNavPane}>
+            <List className={classes.projectName}>
+              <Typography variant="title">Community 1</Typography>
+            </List>
+            <Divider />
 
-          <List
-            className={classes.listItem}
-            tabIndex={0}
-            role="button"
-          >
-            {this.renderListItem(<Home />, 'Home')}
-            {this.renderListItem(<DirectionsRun />, 'Players')}
-            {this.renderListItem(<AssignmentTurnedIn />, 'Sessions')}
-          </List>
-        </Drawer>
+            <List
+              className={classes.listItem}
+              tabIndex={0}
+              role="button"
+            >
+              {this.renderListItem(<Home />, 'Home')}
+              {this.renderListItem(<DirectionsRun />, 'Players')}
+              {this.renderListItem(<AssignmentTurnedIn />, 'Sessions')}
+            </List>
+          </Drawer>
 
-        <BrowserRouter>
-          <Route exact path="/" component={HomeScreen} />
-        </BrowserRouter>
-      </div>
+          <BrowserRouter>
+            <Route exact path="/" component={HomeScreen} />
+          </BrowserRouter>
+        </div>
+      </Provider>
     );
   }
 }
