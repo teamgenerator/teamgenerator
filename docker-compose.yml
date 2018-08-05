@@ -16,9 +16,12 @@ volumes:
   teamgen-psql-volume:
 
 services:
+
+  # Cold Storage
   psql:
     restart: always
-    image: postgres:alpine
+    # Latest postgres image
+    image: postgres
     container_name: psql
     ports:
       # The first part: Where it is externally exposed in the host
@@ -32,3 +35,10 @@ services:
       - teamgen-net
     volumes:
       - teamgen-psql-volume:/var/lib/posgresql/data
+  
+  # Database visualization
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
