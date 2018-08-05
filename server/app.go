@@ -105,7 +105,7 @@ func (a *App) createCommunity(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	if err := p.createProduct(a.DB); err != nil {
+	if err := p.createCommunity(a.DB); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}

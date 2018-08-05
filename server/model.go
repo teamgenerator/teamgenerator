@@ -52,7 +52,7 @@ func (p *community) createCommunity(db *sql.DB) error {
 	return nil
 }
 
-func getCommunites(db *sql.DB, start, count int) ([]community, error) {
+func getCommunities(db *sql.DB, start, count int) ([]community, error) {
 	rows, err := db.Query(
 		"SELECT id, name, location FROM community LIMIT $1 OFFSET $2",
 		count, start)

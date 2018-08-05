@@ -17,20 +17,32 @@ import (
 )
 
 var (
-	PG_USER     = os.Getenv("PG_USER")
-	PG_PASSWORD = os.Getenv("PG_PASSWORD")
-	PG_DATABASE = os.Getenv("PG_DATABASE")
-	port        = 3030
+	pgUser     = os.Getenv("PG_USER")
+	pgPassword = os.Getenv("PG_PASSWORD")
+	pgDatabase = os.Getenv("PG_DATABASE")
+	port       = 3030
 )
 
 func main() {
 	a := App{}
 	a.Initialize(
-		PG_USER,
-		PG_PASSWORD,
-		PG_DATABASE,
+		pgUser,
+		pgPassword,
+		pgDatabase,
 	)
+
+	if _, err := a.DB.Exec(tableCreationQuery); err != nil {
+		log.Fatal(err)
+	}
 
 	a.Run(":8080")
 	log.Printf("The Go Api server is listening on port 3030")
 }
+
+const tableCreationQuery = `CREATE TABLE IF NOT EXISTS community
+(
+id SERIAL,
+name TEXT NOT NULL,
+location TEXT NOT NULL,
+CONSTRAINT community_pkey PRIMARY KEY (id)
+)`
