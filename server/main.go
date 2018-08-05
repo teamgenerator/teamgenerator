@@ -11,6 +11,22 @@
 
 package main
 
-func main() {
+import (
+	"log"
 
+	// External Dependency
+	"github.com/gorilla/mux"
+)
+
+var (
+	port = 3030
+)
+
+func main() {
+	main := mux.NewRouter()
+
+	routerAPI := main.PathPrefix("/api").Subrouter()
+	routerV1 := main.PathPrefix("/v1").Subrouter()
+
+	log.Printf("The Go Api server is listening on port 3030")
 }
