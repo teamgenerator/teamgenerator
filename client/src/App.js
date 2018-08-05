@@ -25,7 +25,7 @@ const styles = {
     marginRight: 20,
   },
   listItem: {
-    width: 200,
+    width: 250,
   },
   projectName: {
     padding: 10,
@@ -58,6 +58,17 @@ class App extends Component {
     });
   }
 
+  renderListItem(icon, label) {
+    return (
+      <ListItem button>
+        <ListItemIcon>
+          {icon}
+        </ListItemIcon>
+        <ListItemText primary={label} />
+      </ListItem>
+    )
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -81,24 +92,9 @@ class App extends Component {
             tabIndex={0}
             role="button"
           >
-            <ListItem button>
-              <ListItemIcon>
-                <Home />
-              </ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <DirectionsRun />
-              </ListItemIcon>
-              <ListItemText primary="Players" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <AssignmentTurnedIn />
-              </ListItemIcon>
-              <ListItemText primary="Sessions" />
-            </ListItem>
+            {this.renderListItem(<Home />, 'Home')}
+            {this.renderListItem(<DirectionsRun />, 'Players')}
+            {this.renderListItem(<AssignmentTurnedIn />, 'Sessions')}
           </List>
         </Drawer>
 
