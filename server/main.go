@@ -13,20 +13,24 @@ package main
 
 import (
 	"log"
-
-	// External Dependency
-	"github.com/gorilla/mux"
+	"os"
 )
 
 var (
-	port = 3030
+	PG_USER     = os.Getenv("PG_USER")
+	PG_PASSWORD = os.Getenv("PG_PASSWORD")
+	PG_DATABASE = os.Getenv("PG_DATABASE")
+	port        = 3030
 )
 
 func main() {
-	main := mux.NewRouter()
+	a := App{}
+	a.Initialize(
+		PG_USER,
+		PG_PASSWORD,
+		PG_DATABASE,
+	)
 
-	routerAPI := main.PathPrefix("/api").Subrouter()
-	routerV1 := main.PathPrefix("/v1").Subrouter()
-
+	a.Run(":8080")
 	log.Printf("The Go Api server is listening on port 3030")
 }
