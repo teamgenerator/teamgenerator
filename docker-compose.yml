@@ -1,0 +1,47 @@
+##
+# Author: Nico Alimin (nicoalimin@gmail.com)
+# Date: Wednesday, 1st August 2018 11:52:46 pm
+# 
+# DESCRIPTION
+# 
+# Copyright (c) 2018 Nico Alimin
+##
+
+version: "3"
+
+networks:
+  teamgen-net:
+
+volumes:
+  teamgen-psql-volume:
+
+services:
+
+  # Cold Storage
+  psql:
+    restart: always
+    # Latest postgres image
+    image: postgres
+    container_name: psql
+    ports:
+      # The first part: Where it is externally exposed in the host
+      # The second part: Where it is exposed in the container network
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: api
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    networks:
+      - teamgen-net
+    volumes:
+      - teamgen-psql-volume:/var/lib/posgresql/data
+  
+  # Database visualization
+  adminer:
+    image: adminer
+    restart: always
+    container_name: adminer
+    ports:
+      - "8080:8080"
+    networks:
+      - teamgen-net
