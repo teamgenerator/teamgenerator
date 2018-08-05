@@ -1,11 +1,11 @@
-###
-# Filename: c:\CPSC\github\teamgenerator\docker-compose.yml
-# Path: c:\CPSC\github\teamgenerator
-# Created Date: Wednesday, August 1st 2018, 11:52:46 pm
-# Author: Nico
-#
-# Copyright (c) 2018 Your Company
-###
+##
+# Author: Nico Alimin (nicoalimin@gmail.com)
+# Date: Wednesday, 1st August 2018 11:52:46 pm
+# 
+# DESCRIPTION
+# 
+# Copyright (c) 2018 Nico Alimin
+##
 
 version: "3"
 
@@ -28,9 +28,9 @@ services:
       # The second part: Where it is exposed in the container network
       - "5432:5432"
     environment:
-      - POSTGRES_DB="api"
-      - POSTGRES_USER="postgres"
-      - POSTGRES_PASSWORD="password"
+      POSTGRES_DB: api
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
     networks:
       - teamgen-net
     volumes:
@@ -40,5 +40,8 @@ services:
   adminer:
     image: adminer
     restart: always
+    container_name: adminer
     ports:
       - "8080:8080"
+    networks:
+      - teamgen-net
