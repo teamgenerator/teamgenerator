@@ -12,8 +12,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
+	"strconv"
 )
 
 var (
@@ -35,8 +37,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	a.Run(":8080")
-	log.Printf("The Go Api server is listening on port 3030")
+	a.Run(":" + strconv.Itoa(port))
+	// Somehow this log wouldn't run
+	fmt.Printf("The Go Api server is listening on port :%d", port)
 }
 
 const tableCreationQuery = `CREATE TABLE IF NOT EXISTS community
