@@ -28,9 +28,9 @@ services:
       # The second part: Where it is exposed in the container network
       - "5432:5432"
     environment:
-      POSTGRES_DB: api
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ${PG_DATABASE}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
     networks:
       - teamgen-net
     volumes:
@@ -49,13 +49,15 @@ services:
   server:
     restart: always
     build:
-      context: server/main.go
+      context: server
     container_name: server
     ports:
       - "3030:3030"
     environment:
-      POSTGRES_DB: api
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      PG_DATABASE: ${PG_DATABASE}
+      PG_USER: ${PG_USER}
+      PG_PASSWORD: ${PG_PASSWORD}
+      PG_HOST: psql
+      PG_PORT: 5432
     networks:
       - teamgen-net
