@@ -23,12 +23,12 @@ type community struct {
 
 func (p *community) getCommunity(db *sql.DB) error {
 	return db.QueryRow("SELECT id, name, Location FROM community WHERE id=$1",
-		p.ID).Scan(&p.Name, &p.Location)
+		p.ID).Scan(&p.ID, &p.Name, &p.Location)
 }
 
 func (p *community) updateCommunity(db *sql.DB) error {
 	_, err :=
-		db.Exec("UPDATE community SET name=$1, loation=$2 WHERE id=$3",
+		db.Exec("UPDATE community SET name=$1, location=$2 WHERE id=$3",
 			p.Name, p.Location, p.ID)
 
 	return err
