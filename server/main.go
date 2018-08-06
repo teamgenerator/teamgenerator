@@ -41,9 +41,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	a.Run(":" + strconv.Itoa(port))
-	// Somehow this log wouldn't run
 	fmt.Printf("The Go Api server is listening on port :%d", port)
+	a.Run(":" + strconv.Itoa(port))
 }
 
 const tableCreationQuery = `CREATE TABLE IF NOT EXISTS community
