@@ -22,12 +22,16 @@ var (
 	pgUser     = os.Getenv("PG_USER")
 	pgPassword = os.Getenv("PG_PASSWORD")
 	pgDatabase = os.Getenv("PG_DATABASE")
+	pgHost     = os.Getenv("PG_HOST")
+	pgPort     = os.Getenv("PG_PORT")
 	port       = 3030
 )
 
 func main() {
 	a := App{}
 	a.Initialize(
+		pgHost,
+		pgPort,
 		pgUser,
 		pgPassword,
 		pgDatabase,

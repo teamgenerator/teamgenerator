@@ -29,13 +29,13 @@ ADD . $SRC_DIR
 WORKDIR $SRC_DIR
 
 # Install dependencies
-RUN dep ensure
+# RUN dep ensure
 
 # Install the binary (into /go/bin/)
 RUN go install
 
 # Build it:
-RUN cd $SRC_DIR; go build -o myapp; cp myapp /app/
+RUN cd $SRC_DIR; go build -o myapp
 
 # Export ports
 EXPOSE 8080
