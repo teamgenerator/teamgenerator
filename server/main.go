@@ -29,6 +29,7 @@ var (
 
 func main() {
 	a := App{}
+
 	a.Initialize(
 		pgHost,
 		pgPort,
@@ -36,12 +37,13 @@ func main() {
 		pgPassword,
 		pgDatabase,
 	)
+	fmt.Printf("Database initialized at %s for database %s", pgPort, pgDatabase)
 
 	if _, err := a.DB.Exec(tableCreationQuery); err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("The Go Api server is listening on port :%d", port)
+	fmt.Printf("Initializing app")
 	a.Run(":" + strconv.Itoa(port))
 }
 
