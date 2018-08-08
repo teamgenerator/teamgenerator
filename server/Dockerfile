@@ -9,17 +9,12 @@
 
 FROM iron/go:dev
 
-###
-# Build arguments
-###
-
 # Environment Variables
 ENV SRC_DIR=/go/src/github.com/teamgenerator/teamgenerator/server
 
 ###
 # Metainformation
 ###
-
 LABEL Author="Nico Alimin <nicoalimin@gmail.com>"
 
 # Add the source code:
@@ -28,10 +23,7 @@ ADD . $SRC_DIR
 # Change the directory to the source code
 WORKDIR $SRC_DIR
 
-# Install dependencies
-# RUN dep ensure
-
-# Install the binary (into /go/bin/)
+# Install dependencies to vendor/
 RUN go install
 
 # Build it:
