@@ -36,7 +36,7 @@ func (a *App) Initialize(host, port, user, password, dbname string) {
 	connectionString :=
 		fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 
-	fmt.Printf(connectionString)
+	fmt.Printf("Connection String is: %s\n", connectionString)
 
 	var err error
 	a.DB, err = sql.Open("postgres", connectionString)
@@ -51,8 +51,8 @@ func (a *App) Initialize(host, port, user, password, dbname string) {
 
 // Run the server at designated port
 func (a *App) Run(addr string) {
+	fmt.Printf("The Go Api server is listening on port %s\n", addr)
 	log.Fatal(http.ListenAndServe(addr, a.Router))
-	fmt.Printf("The Go Api server is listening on port :%s", addr)
 }
 
 func (a *App) initializeRoutes() {

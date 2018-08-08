@@ -37,13 +37,13 @@ func main() {
 		pgPassword,
 		pgDatabase,
 	)
-	fmt.Printf("Database initialized at %s for database %s", pgPort, pgDatabase)
+	fmt.Printf("Database initialized at %s for database %s\n", pgPort, pgDatabase)
 
 	if _, err := a.DB.Exec(tableCreationQuery); err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Initializing app")
+	fmt.Printf("Initializing app\n")
 	a.Run(":" + strconv.Itoa(port))
 }
 
