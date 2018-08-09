@@ -1,7 +1,7 @@
 ////
-// author: Nico Alimin (nico@hackcapital.com)
+// author: Nico Alimin (nicoalimin@gmail.com)
 // date: Sunday, 5th August 2018 1:24:25 am
-// lastModifiedBy: Nico Alimin (nico@hackcapital.com)
+// lastModifiedBy: Nico Alimin (nicoalimin@gmail.com)
 // lastModifiedTime: Sunday, 5th August 2018 1:24:25 am
 //
 // DESCRIPTION
@@ -44,7 +44,20 @@ func (a *App) Initialize(host, port, user, password, dbname string) {
 		log.Fatal(err)
 	}
 
-	a.Router = mux.NewRouter()
+	//
+	// Creates the router and subrouters
+	//
+
+	// Main router
+	main := mux.NewRouter()
+
+	// API subrouter
+	routerAPI := main.PathPrefix("/api").Subrouter()
+
+	// Version subrouter
+	routerV1 := routerAPI.PathPrefix("/v1").Subrouter()
+
+	a.Router = routerV1
 
 	a.initializeRoutes()
 }

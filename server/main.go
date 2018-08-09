@@ -1,7 +1,7 @@
 ////
-// author: Nico Alimin (nico@hackcapital.com)
+// author: Nico Alimin (nicoalimin@gmail.com)
 // date: Sunday, 5th August 2018 12:48:35 am
-// lastModifiedBy: Nico Alimin (nico@hackcapital.com)
+// lastModifiedBy: Nico Alimin (nicoalimin@gmail.com)
 // lastModifiedTime: Sunday, 5th August 2018 12:52:42 am
 //
 // DESCRIPTION
