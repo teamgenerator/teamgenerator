@@ -26,7 +26,7 @@ import ChevronRight from '@material-ui/icons/ChevronRight';
 
 const styles = {
   content: {
-    marginTop: '2%',
+    marginTop: '1%',
   },
   paper: {
     marginBottom: '10px',
