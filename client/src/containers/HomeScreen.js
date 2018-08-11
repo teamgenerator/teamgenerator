@@ -38,7 +38,7 @@ class HomeScreen extends Component {
         <AppBar title="home" navpane/>
         <Grid container>
           <Grid item xs>
-            <Button variant="extendedFab" color="secondary" fullWidth className={classes.actions}>
+            <Button variant="extendedFab" color="secondary" onClick={() => this.handleGoTo('/generate')} fullWidth className={classes.actions}>
               Generate Teams
             </Button>
 

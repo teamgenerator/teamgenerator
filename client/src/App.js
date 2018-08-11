@@ -6,6 +6,7 @@ import configureStore from './store';
 import HomeScreen from './containers/HomeScreen';
 import PlayersScreen from './containers/PlayersScreen';
 import PlayerDetails from './containers/PlayerDetails';
+import GenerateScreen from './containers/GenerateScreen';
 
 const store = configureStore();
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
             // Router for players
             <Route exact path="/players" component={PlayersScreen} />
             <Route path="/players/:id" component={PlayerDetails} />
+            <Route exact path="/generate" component={GenerateScreen} />
           </Switch>
         </BrowserRouter>
       </Provider>

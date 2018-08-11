@@ -29,6 +29,7 @@ class PlayerDetails extends Component {
 
     this.state = {
       updatedAttributes: {
+        id:  this.props.player.id || null,
         name: this.props.player.name || '',
         ratings: this.props.player.ratings || 5,
       },
@@ -97,7 +98,7 @@ class PlayerDetails extends Component {
             </IconButton>
           </Grid>
           <Grid item xs={8} className={classes.ratingsGridItem}>
-            <StarRatings justStars ratings={this.state.updatedAttributes.ratings} />
+            <StarRatings onStarChange={newRating => this.handleEditRatings(newRating - this.state.updatedAttributes.ratings)} justStars ratings={this.state.updatedAttributes.ratings} />
           </Grid>
           <Grid item xs={2}>
             <IconButton className={classes.chevrons}

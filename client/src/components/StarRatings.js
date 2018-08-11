@@ -42,12 +42,12 @@ class StarRatings extends Component {
     const { classes, justStars } = this.props;
     const stars = [];
 
-    for (let i = 0; i < this.props.ratings; i++) {
-      stars.push(<Star key={i} className={[classes.star, justStars ? classes.starJumbo : ''].join(' ')} />)
+    for (let i = 1; i <= this.props.ratings; i++) {
+      stars.push(<Star key={i} onClick={() => this.props.onStarChange(i)} className={[classes.star, justStars ? classes.starJumbo : ''].join(' ')} />)
     }
 
-    for (let i = this.props.ratings; i < 10; i++) {
-      stars.push(<Star key={i} className={[classes.starDisabled, justStars ? classes.starJumbo : '']. join(' ')} />);
+    for (let i = this.props.ratings + 1; i <= 10; i++) {
+      stars.push(<Star key={i} onClick={() => this.props.onStarChange(i)} className={[classes.starDisabled, justStars ? classes.starJumbo : '']. join(' ')} />);
     }
 
     return (
@@ -66,10 +66,12 @@ class StarRatings extends Component {
 StarRatings.propTypes = {
   ratings: PropTypes.number.isRequired,
   justStars: PropTypes.bool,
+  onStarChange: PropTypes.func,
 };
 
 StarRatings.defaultTypes = {
   justStars: false,
+  onStarChange: null,
 };
 
 export default withStyles(styles)(StarRatings);

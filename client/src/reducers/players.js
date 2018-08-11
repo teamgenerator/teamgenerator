@@ -9,6 +9,36 @@ const defaultState = {
     name: 'Nico Alimin',
     ratings: 8,
   },
+  '0003': {
+    id: '0003',
+    name: 'Timothy Situmeang',
+    ratings: 9,
+  },
+  '0004': {
+    id: '0004',
+    name: 'Kiky Tangerine',
+    ratings: 8,
+  },
+  '0005': {
+    id: '0005',
+    name: 'Ivan Gunawan',
+    ratings: 5,
+  },
+  '0006': {
+    id: '0006',
+    name: 'Victor',
+    ratings: 8,
+  },
+  '0007': {
+    id: '0007',
+    name: 'Kynan Bangun',
+    ratings: 9,
+  },
+  '0008': {
+    id: '0008',
+    name: 'Dito Dakota',
+    ratings: 8,
+  },
 };
 
 const players = (state = defaultState, action) => {
