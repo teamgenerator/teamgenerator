@@ -1,4 +1,15 @@
-const defaultState = {};
+const defaultState = {
+  '0001': {
+    id: '0001',
+    name: 'Michael Englo',
+    ratings: 5,
+  },
+  '0002': {
+    id: '0002',
+    name: 'Nico Alimin',
+    ratings: 8,
+  },
+};
 
 const players = (state = defaultState, action) => {
   switch (action.type) {

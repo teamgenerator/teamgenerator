@@ -4,7 +4,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import configureStore from './store';
 
 import HomeScreen from './containers/HomeScreen';
-import CreatePlayerScreen from './containers/CreatePlayerScreen';
+import PlayersScreen from './containers/PlayersScreen';
+import PlayerDetails from './containers/PlayerDetails';
 
 const store = configureStore();
 class App extends Component {
@@ -23,7 +24,8 @@ class App extends Component {
             <Route exact path="/" component={HomeScreen} />
 
             // Router for players
-            <Route path="/players/new" component={CreatePlayerScreen} />
+            <Route exact path="/players" component={PlayersScreen} />
+            <Route path="/players/:id" component={PlayerDetails} />
           </Switch>
         </BrowserRouter>
       </Provider>

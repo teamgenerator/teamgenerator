@@ -24,11 +24,11 @@ class HomeScreen extends Component {
       
     };
   
-    this.handleGoToCreatePlayer = this.handleGoToCreatePlayer.bind(this);
+    this.handleGoTo = this.handleGoTo.bind(this);
   }
 
-  handleGoToCreatePlayer() {
-    this.props.history.push('/players/new');
+  handleGoTo(pagePath) {
+    this.props.history.push(pagePath);
   }
 
   render() {
@@ -42,11 +42,11 @@ class HomeScreen extends Component {
               Generate Teams
             </Button>
 
-            <Button variant="extendedFab"  color="secondary" onClick={this.handleGoToCreatePlayer} fullWidth className={classes.actions}>
+            <Button variant="extendedFab"  color="secondary" onClick={() => this.handleGoTo('/players/new')} fullWidth className={classes.actions}>
                 Add Players
             </Button>
 
-            <Button variant="extendedFab"  color="secondary" fullWidth className={classes.actions}>
+            <Button variant="extendedFab"  color="secondary" onClick={() => this.handleGoTo('/players')} fullWidth className={classes.actions}>
               Edit Players
             </Button>
           </Grid>

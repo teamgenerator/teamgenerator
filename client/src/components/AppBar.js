@@ -66,6 +66,7 @@ class CustomAppBar extends Component {
     this.handleCloseNavPane = this.handleCloseNavPane.bind(this);
     this.handleOpenNavPane = this.handleOpenNavPane.bind(this);
     this.handleBack = this.handleBack.bind(this);
+    this.handleGoToPage = this.handleGoToPage.bind(this);
   }
 
   handleCloseNavPane() {
@@ -80,14 +81,18 @@ class CustomAppBar extends Component {
       navPaneOpened: true,
     });
   }
+
+  handleGoToPage(pagePath) {
+    this.props.history.push(pagePath);
+  }
   
   handleBack() {
     this.props.history.goBack();
   }
 
-  renderListItem(icon, label) {
+  renderListItem(icon, label, pagePath) {
     return (
-      <ListItem button>
+      <ListItem button onClick={() => this.handleGoToPage(pagePath)}>
         <ListItemIcon>
           {icon}
         </ListItemIcon>
@@ -138,8 +143,8 @@ class CustomAppBar extends Component {
                 tabIndex={0}
                 role="button"
               >
-                {this.renderListItem(<Home />, 'Home')}
-                {this.renderListItem(<DirectionsRun />, 'Players')}
+                {this.renderListItem(<Home />, 'Home', '/')}
+                {this.renderListItem(<DirectionsRun />, 'Players', '/players')}
                 {this.renderListItem(<AssignmentTurnedIn />, 'Sessions')}
               </List>
             </Drawer>

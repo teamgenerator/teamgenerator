@@ -10,7 +10,7 @@ const styles = {
   },
 };
 
-class CreatePlayerScreen extends Component {
+class PlayerDetails extends Component {
   constructor(props) {
     super(props);
 
@@ -26,7 +26,7 @@ class CreatePlayerScreen extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.container}>
-        <AppBar title="Add New Player"/>
+        <AppBar title="Add New Player" handleOkay={() => {}} />
         <Grid container spacing={24}>
           <Grid item xs={12}>
             <TextField
@@ -46,4 +46,4 @@ class CreatePlayerScreen extends Component {
   }
 }
 
-export default withStyles(styles)(CreatePlayerScreen);
+export default withStyles(styles)(PlayerDetails);
