@@ -4,7 +4,6 @@ import Home from '@material-ui/icons/Home';
 import AssignmentTurnedIn from '@material-ui/icons/AssignmentTurnedIn'; 
 import DirectionsRun from '@material-ui/icons/DirectionsRun';
 import ArrowBack from '@material-ui/icons/ArrowBack';
-import Check from '@material-ui/icons/Check';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -118,13 +117,19 @@ class CustomAppBar extends Component {
                 </IconButton>
               }
 
-              <Typography className={classes.title} variant="title" color="inherit">
+              <Typography className={classes.title} variant="subheading" color="inherit">
                 {this.props.title.toUpperCase()}
               </Typography>
 
-              {this.props.handleOkay ?
-                <IconButton className={classes.rightButton} onClick={this.props.handleOkay} color="inherit" aria-label="Menu">
-                  <Check />
+              {this.props.rightButton ?
+                <IconButton
+                  className={classes.rightButton}
+                  disabled={this.props.rightButton.disabled}
+                  onClick={this.props.rightButton.onClick}
+                  color="inherit"
+                  aria-label="Menu"
+                >
+                  {this.props.rightButton.icon}
                 </IconButton>
               : null}
 
@@ -159,12 +164,16 @@ class CustomAppBar extends Component {
 CustomAppBar.propTypes = {
   title: PropTypes.string.isRequired,
   navpane: PropTypes.bool,
-  handleOkay: PropTypes.func,
+  rightButton: PropTypes.shape({
+    icon: PropTypes.node,
+    onClick: PropTypes.func,
+    disabled: PropTypes.bool,
+  }),
 };
 
 CustomAppBar.defaultProps  = {
   navpane: false,
-  handleOkay: null,
+  rightButton: null,
 };
 
 export default withRouter(withStyles(styles)(CustomAppBar));

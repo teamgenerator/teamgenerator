@@ -20,8 +20,14 @@ const styles = {
     width: '50px',
   },
   container: {
-    width: '120px',
+    width: '200px',
   },
+  center: {
+    margin: 'auto',
+  },
+  starJumbo:  {
+    fontSize: '20px',
+  }
 };
 
 class StarRatings extends Component {
@@ -33,21 +39,25 @@ class StarRatings extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, justStars } = this.props;
     const stars = [];
 
     for (let i = 0; i < this.props.ratings; i++) {
-      stars.push(<Star key={i} className={classes.star}/>)
+      stars.push(<Star key={i} className={[classes.star, justStars ? classes.starJumbo : ''].join(' ')} />)
     }
 
     for (let i = this.props.ratings; i < 10; i++) {
-      stars.push(<Star key={i} className={classes.starDisabled} />);
+      stars.push(<Star key={i} className={[classes.starDisabled, justStars ? classes.starJumbo : '']. join(' ')} />);
     }
 
     return (
-      <div className={classes.container}>
+      <div className={[classes.container, justStars ? classes.center : ''].join(' ')}>
         {stars}
-        <Typography variant="caption" className={classes.ratingsFraction}>({this.props.ratings} / 10)</Typography>
+        {
+          !this.props.justStars
+          ? <Typography variant="caption" className={classes.ratingsFraction}>({this.props.ratings} / 10)</Typography>
+          : null
+        }
       </div>
     );
   }
@@ -55,6 +65,11 @@ class StarRatings extends Component {
 
 StarRatings.propTypes = {
   ratings: PropTypes.number.isRequired,
+  justStars: PropTypes.bool,
+};
+
+StarRatings.defaultTypes = {
+  justStars: false,
 };
 
 export default withStyles(styles)(StarRatings);
