@@ -199,17 +199,29 @@ class GenerateScreen extends Component {
   getStepThreeAttributes() {
     const { classes } = this.props;
 
+    const teams = (this.state.teams || []);
+    const fullTeams = teams.slice(0, Math.floor(this.state.selectedPlayersKeys.length / this.state.numberOfPlayersPerTeam));
+    const extraPlayersTeam = teams.length > 0 && this.state.selectedPlayersKeys.length % this.state.numberOfPlayersPerTeam !== 0 ? teams[teams.length - 1] : [];
+    
     const content = (
-      <Grid container spacing={12} className={classes.content} alignContent="center">
+      <Grid container spacing={16} className={classes.content} alignContent="center">
         <Grid item xs={12} >
           <Button variant="raised" size="small" className={classes.rerollButton} onClick={this.handleGenerateNewTeams}>
             <Casino className={classes.casino} /> Reroll
           </Button>
         </Grid>
         <Grid item xs={12}>
-          {(this.state.teams || []).map((team, i) => {
-            return <TeamPanel name={`Team ${i + 1}`} playerListItemProps={team}/>
-          })}
+          {fullTeams.map((team, i) =>
+            <TeamPanel name={`Team ${i + 1}`} playerListItemProps={team}/>)
+          }
+          {
+            extraPlayersTeam.length > 0
+            ? <React.Fragment>
+                <Divider />
+                <TeamPanel name={this.state.extraPlayersSelectedOption === 'substitutes' ? `Subs` : `Team ${teams.length}`} playerListItemProps={extraPlayersTeam} />
+              </React.Fragment>
+            : null
+          }
         </Grid>
       </Grid>
     );
