@@ -22,6 +22,9 @@ import StarRatings from '../components/StarRatings';
 import { withRouter } from 'react-router-dom';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
+import Casino from '@material-ui/icons/Casino';
+import TeamPanel from '../components/TeamPanel';
+import generateRandomTeam from '../utils/generateRandomTeam';
 
 
 const styles = {
@@ -43,34 +46,57 @@ const styles = {
     left: '50%',
     transform: 'translateX(-50%)',
   },
+  rerollButton: {
+    color: 'grey',
+    float: 'right',
+    marginRight: '10px',
+  },
+  casino: {
+    marginRight: '5px',
+  },
 };
 
 class GenerateScreen extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       step: 1,
       selectedPlayersKeys: [],
       extraPlayersSelectedOption: null,
-      numberOfTeams: 1,
+      numberOfPlayersPerTeam: 1,
+      teams: null,
     };
     this.handleToggleCheckbox = this.handleToggleCheckbox.bind(this);
     this.handleMoveToAnotherStep = this.handleMoveToAnotherStep.bind(this);
     this.handleRadioChange = this.handleRadioChange.bind(this);
-    this.handleChangeNumberOfTeams = this.handleChangeNumberOfTeams.bind(this);
+    this.handleChangeNumberOfPlayersPerTeam = this.handleChangeNumberOfPlayersPerTeam.bind(this);
     this.getStepAttributes = this.getStepAttributes.bind(this);
     this.getStepOneAttributes = this.getStepOneAttributes.bind(this);
     this.getStepTwoAttributes = this.getStepTwoAttributes.bind(this);
+    this.getStepThreeAttributes = this.getStepThreeAttributes.bind(this);
+    this.handleGenerateNewTeams = this.handleGenerateNewTeams.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (
       this.state.step === 2 &&
-      this.state.numberOfTeams > this.state.selectedPlayersKeys.length
+      this.state.numberOfPlayersPerTeam > this.state.selectedPlayersKeys.length
     ) {
-      this.setState({ numberOfTeams: 1 });
+      this.setState({ numberOfPlayersPerTeam: 1 });
     }
+
+    if (this.state.step === 3 && !this.state.teams) {
+      this.handleGenerateNewTeams();
+    }
+
+    if (this.state.step === 3 && prevState.step !== 3 ) {
+      this.handleGenerateNewTeams();
+    }
+  }
+
+  handleGenerateNewTeams() {
+    const selectedPlayers = this.props.playersArray.filter(p => this.state.selectedPlayersKeys.includes(p.id));
+    this.setState({ teams: generateRandomTeam(selectedPlayers, this.state.numberOfPlayersPerTeam)})
   }
 
   getStepAttributes(step) {
@@ -79,6 +105,8 @@ class GenerateScreen extends Component {
         return this.getStepOneAttributes();
       case 2:
         return this.getStepTwoAttributes();
+      case 3:
+        return this.getStepThreeAttributes();
       default:
         break;
     }
@@ -127,17 +155,17 @@ class GenerateScreen extends Component {
           </Typography>
         </Grid>
         <Grid item xs={4}>
-          <IconButton className={classes.chevrons} onClick={() => this.handleChangeNumberOfTeams(-1)} disabled={this.state.numberOfTeams <= 1}>
+          <IconButton className={classes.chevrons} onClick={() => this.handleChangeNumberOfPlayersPerTeam(-1)} disabled={this.state.numberOfPlayersPerTeam <= 1}>
             <ChevronLeft />
           </IconButton>
         </Grid>
         <Grid item xs={4}>
           <Typography variant="display2" align="center">
-            {this.state.numberOfTeams}
+            {this.state.numberOfPlayersPerTeam}
           </Typography>
         </Grid>
         <Grid item xs={4}>
-          <IconButton className={classes.chevrons} onClick={() => this.handleChangeNumberOfTeams(1)} disabled={this.state.numberOfTeams >= this.state.selectedPlayersKeys.length}>
+          <IconButton className={classes.chevrons} onClick={() => this.handleChangeNumberOfPlayersPerTeam(1)} disabled={this.state.numberOfPlayersPerTeam >= this.state.selectedPlayersKeys.length}>
             <ChevronRight />
           </IconButton>
         </Grid>
@@ -168,6 +196,32 @@ class GenerateScreen extends Component {
     }
   }
 
+  getStepThreeAttributes() {
+    const { classes } = this.props;
+
+    const content = (
+      <Grid container spacing={12} className={classes.content} alignContent="center">
+        <Grid item xs={12} >
+          <Button variant="raised" size="small" className={classes.rerollButton} onClick={this.handleGenerateNewTeams}>
+            <Casino className={classes.casino} /> Reroll
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          {(this.state.teams || []).map((team, i) => {
+            return <TeamPanel name={`Team ${i + 1}`} playerListItemProps={team}/>
+          })}
+        </Grid>
+      </Grid>
+    );
+
+    return {
+      content,
+      title: 'Confirm Team',
+      leftButtonLabel: 'Back',
+      rightButtonLabel: 'Play',
+    };
+  }
+
   renderPlayerListItem(playerKey, playerName, playerRatings, playerSelected) {
     return (
       <Paper key={playerKey} className={this.props.classes.paper}>
@@ -186,9 +240,9 @@ class GenerateScreen extends Component {
     );
   }
 
-  handleChangeNumberOfTeams(change) {
+  handleChangeNumberOfPlayersPerTeam(change) {
     this.setState({
-      numberOfTeams: this.state.numberOfTeams + change,
+      numberOfPlayersPerTeam: this.state.numberOfPlayersPerTeam + change,
     });
   }
 

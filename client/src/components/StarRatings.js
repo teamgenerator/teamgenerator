@@ -69,7 +69,7 @@ StarRatings.propTypes = {
   onStarChange: PropTypes.func,
 };
 
-StarRatings.defaultTypes = {
+StarRatings.defaultProps = {
   justStars: false,
   onStarChange: null,
 };
