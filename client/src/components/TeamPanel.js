@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
-import { Typography, Paper, Divider, List } from '../../node_modules/@material-ui/core';
+import { Typography, Paper, Divider, List, Grid } from '../../node_modules/@material-ui/core';
 import PlayerListItem from './PlayerListItem';
 
 const styles = {
@@ -24,13 +24,24 @@ class TeamPanel extends Component {
     const { classes } = this.props;
     return (
         <Paper className={classes.container}>
-            <Typography variant="title">{this.props.name}</Typography>
-            <Divider />
-            <List>
-              {this.props.playerListItemProps.map((p, index) =>
-                <PlayerListItem key={p.id} name={p.name} index={index + 1} ratings={p.ratings} />
-              )}
-            </List>
+            <Grid container>
+              <Grid item xs={4}>
+                <Typography variant="title">{this.props.name}</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="caption">Players: {this.props.playerListItemProps.length}</Typography>
+                <Typography variant="caption">Total Stars: {this.props.playerListItemProps.reduce((accumulator, player) => accumulator + player.ratings, 0)}</Typography>
+              </Grid>
+              <Grid item xs={4} />
+              <Grid item xs={12}>
+                <Divider />
+                <List>
+                  {this.props.playerListItemProps.map((p, index) =>
+                    <PlayerListItem key={p.id} name={p.name} index={index + 1} ratings={p.ratings} />
+                  )}
+                </List>
+              </Grid>
+            </Grid>
         </Paper>
     );
   }

@@ -8,6 +8,14 @@ const generateRandomTeam = (players, playersPerTeam) => {
 
   const teams = [];
 
+  const totalRatings = players.reduce((acc, p) => acc + p.ratings, 0);
+
+  const maxTeamRatings = totalRatings / numberOfTeams;
+
+  console.log('total ratings: ', totalRatings);
+  console.log('number of teams: ', numberOfTeams);
+  console.log("max ratings per team: ", maxTeamRatings);
+
   for (let i = 0; i < numberOfTeams; i++) {
     teams[i] = [];
   }
@@ -15,7 +23,10 @@ const generateRandomTeam = (players, playersPerTeam) => {
   for (let i = 0; i < shuffledPlayers.length; i++) {
     let teamToPutPlayerIndex = 0;
 
-    while (teams[teamToPutPlayerIndex].length >= playersPerTeam) {
+    while (
+      teams[teamToPutPlayerIndex].length >= playersPerTeam &&
+      teams[teamToPutPlayerIndex].reduce((acc, p) => acc + p.ratings, 0) + shuffledPlayers[i].ratings > maxTeamRatings
+    ) {
       teamToPutPlayerIndex++;
     }
 

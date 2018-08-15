@@ -212,12 +212,15 @@ class GenerateScreen extends Component {
         </Grid>
         <Grid item xs={12}>
           {fullTeams.map((team, i) =>
-            <TeamPanel name={`Team ${i + 1}`} playerListItemProps={team}/>)
+            <TeamPanel key={i} name={`Team ${i + 1}`} playerListItemProps={team}/>)
           }
           {
             extraPlayersTeam.length > 0
             ? <React.Fragment>
-                <Divider />
+                {this.state.extraPlayersSelectedOption === 'substitutes'
+                  ? <Divider />
+                  : null
+                }
                 <TeamPanel name={this.state.extraPlayersSelectedOption === 'substitutes' ? `Subs` : `Team ${teams.length}`} playerListItemProps={extraPlayersTeam} />
               </React.Fragment>
             : null
