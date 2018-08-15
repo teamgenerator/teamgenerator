@@ -14,17 +14,19 @@ package models
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/jinzhu/gorm"
 	"github.com/teamgenerator/teamgenerator/server/db"
 )
 
 // Community object
 type Community struct {
-	gorm.Model
-	Name     string `gorm:"type:varchar(100);unique"`
-	Location string
+	ID        uint `gorm:"primary_key"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	Name      string `gorm:"type:varchar(100);unique"`
+	Location  string
 }
 
 // GetCommunities function to return all communities

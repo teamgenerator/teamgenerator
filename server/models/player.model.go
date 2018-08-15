@@ -14,15 +14,17 @@ package models
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/jinzhu/gorm"
 	"github.com/teamgenerator/teamgenerator/server/db"
 )
 
 // The Player Object
 type Player struct {
-	gorm.Model
+	ID          uint `gorm:"primary_key"`
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 	Name        string
 	Ratings     int
 	CommunityID int
