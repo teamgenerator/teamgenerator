@@ -28,9 +28,12 @@ services:
       # The second part: Where it is exposed in the container network
       - "5432:5432"
     environment:
-      POSTGRES_DB: ${PG_DATABASE}
-      POSTGRES_USER: ${PG_USER}
-      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      # POSTGRES_DB: ${PG_DATABASE}
+      # POSTGRES_USER: ${PG_USER}
+      # POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: api
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
     networks:
       - teamgen-net
     volumes:
@@ -54,9 +57,12 @@ services:
     ports:
       - "3030:3030"
     environment:
-      PG_DATABASE: ${PG_DATABASE}
-      PG_USER: ${PG_USER}
-      PG_PASSWORD: ${PG_PASSWORD}
+      # PG_DATABASE: ${PG_DATABASE}
+      # PG_USER: ${PG_USER}
+      # PG_PASSWORD: ${PG_PASSWORD}
+      PG_DATABASE: api
+      PG_USER: postgres
+      PG_PASSWORD: password
       PG_HOST: psql
       PG_PORT: 5432
     networks:
