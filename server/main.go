@@ -35,6 +35,8 @@ var (
 )
 
 func main() {
+
+	// Go Routers. Defaults to /api/v1
 	main := mux.NewRouter()
 	routerAPI := main.PathPrefix("/api").Subrouter()
 	router := routerAPI.PathPrefix("/v1").Subrouter()

@@ -22,15 +22,18 @@ var DB *gorm.DB
 
 // Open opens the database connection
 func Open(pgUser string, pgPassword string, pgDatabase string, pgHost string, pgPort string) {
+
+	// Initializes the connection string.
 	connectionString :=
 		fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", pgHost, pgPort, pgUser, pgPassword, pgDatabase)
 
+	// Initiates connection to the postgres database
 	var err error
 	DB, err = gorm.Open("postgres", connectionString)
-	fmt.Printf("Opened connection to %s\n", connectionString)
 	if err != nil {
 		panic("failed to connect database")
 	}
+	fmt.Printf("Opened connection to %s\n", connectionString)
 }
 
 // Close closes the database connection
