@@ -1,3 +1,27 @@
+# Team Generator
+
+Team Generator is a web application to help game organizers/drop-in admins divide players into teams in a game session. User can rate players to better reflect their abilities and let the application divide the team equally depending on skill levels. Players can also improve their ratings by winning games.
+
+## On the roadmap
+
+We are working really hard to implement features that users want. Check out our issues to see what is coming next and suggest new features.
+
+<br>
+
+# Software App Docs
+
+Currently we are using React (bootstrapped with Create React App) as our front-end framework with the addition of Redux for state management, React Router for navigation, and Material UI for UI components.
+
+On the back-end, we use Golang with Gorilla/Mux as the C layer framework and Postgres as our data storage. We also seperate our C and M layer into two microservices and containerized using Docker and docker-compose.
+
+<br>
+<br>
+
+***
+
+<br>
+## Create React App
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
