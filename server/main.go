@@ -14,9 +14,16 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
-	"strconv"
+
+	"github.com/gorilla/mux"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/teamgenerator/teamgenerator/server/db"
+	"github.com/teamgenerator/teamgenerator/server/models"
 )
+
+var err error
 
 var (
 	pgUser     = os.Getenv("PG_USER")
@@ -24,33 +31,38 @@ var (
 	pgDatabase = os.Getenv("PG_DATABASE")
 	pgHost     = os.Getenv("PG_HOST")
 	pgPort     = os.Getenv("PG_PORT")
-	port       = 3030
+	port       = ":3030"
 )
 
 func main() {
-	a := App{}
 
-	a.Initialize(
-		pgHost,
-		pgPort,
-		pgUser,
-		pgPassword,
-		pgDatabase,
-	)
-	fmt.Printf("Database initialized at %s for database %s\n", pgPort, pgDatabase)
+	// Go Routers. Defaults to /api/v1
+	main := mux.NewRouter()
+	routerAPI := main.PathPrefix("/api").Subrouter()
+	router := routerAPI.PathPrefix("/v1").Subrouter()
 
-	if _, err := a.DB.Exec(tableCreationQuery); err != nil {
-		log.Fatal(err)
-	}
+	// Initiate connection to postgres database
+	db.Open(pgUser, pgPassword, pgDatabase, pgHost, pgPort)
+	defer db.Close()
 
-	fmt.Printf("Initializing app\n")
-	a.Run(":" + strconv.Itoa(port))
+	// Migrates the models
+	db.DB.AutoMigrate(&models.Player{}, &models.Community{})
+	db.DB.Model(&models.Player{}).AddForeignKey("community_id", "communities(id)", "CASCADE", "CASCADE")
+
+	// Route for community-related endpoints
+	router.HandleFunc("/Communities", models.GetCommunities).Methods("GET")
+	router.HandleFunc("/Communities/{id}", models.GetCommunity).Methods("GET")
+	router.HandleFunc("/Communities", models.CreateCommunity).Methods("POST")
+	router.HandleFunc("/Communities/{id}", models.UpdateCommunity).Methods("PATCH")
+	router.HandleFunc("/Communities/{id}", models.DeleteCommunity).Methods("DELETE")
+
+	// Route for player-related endpoints
+	router.HandleFunc("/Players", models.GetPlayers).Methods("GET")
+	router.HandleFunc("/Players/{id}", models.GetPlayer).Methods("GET")
+	router.HandleFunc("/Players", models.CreatePlayer).Methods("POST")
+	router.HandleFunc("/Players/{id}", models.UpdatePlayer).Methods("PATCH")
+	router.HandleFunc("/Players/{id}", models.DeletePlayer).Methods("DELETE")
+
+	fmt.Printf("Go Backend Service initialized at port %s\n", port)
+	log.Fatal(http.ListenAndServe(port, router))
 }
-
-const tableCreationQuery = `CREATE TABLE IF NOT EXISTS community
-(
-id SERIAL,
-name TEXT NOT NULL,
-location TEXT NOT NULL,
-CONSTRAINT community_pkey PRIMARY KEY (id)
-)`

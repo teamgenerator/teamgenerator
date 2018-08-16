@@ -22,4 +22,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # Installed modules
-server/vendor/
+server/vendor/ 
