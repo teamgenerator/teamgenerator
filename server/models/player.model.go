@@ -27,6 +27,7 @@ type Player struct {
 	UpdatedAt   time.Time
 	Name        string
 	Ratings     int
+	Form        int
 	CommunityID int
 }
 
@@ -63,7 +64,7 @@ func UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&player)
 }
 
-// DeletePlayer function to delete a single communtiy by ID
+// DeletePlayer function to delete a single player by ID
 func DeletePlayer(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var player Player
