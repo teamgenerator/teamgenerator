@@ -34,6 +34,7 @@ const generateRandomTeam = (players, playersPerTeam) => {
     while (
       teams[teamToPutPlayerIndex] && 
       (teams[teamToPutPlayerIndex].length >= playersPerTeam ||
+      // total players ratings should not exceed the expected total ratings + average player rating / 2
       teams[teamToPutPlayerIndex].reduce((acc, p) => acc + p.ratings, 0) + shuffledPlayers[i].ratings > (maxTeamRatings + averagePlayerRatings / 2))
     ) {
       teamToPutPlayerIndex++;
