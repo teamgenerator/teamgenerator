@@ -50,18 +50,18 @@ func main() {
 	addRelations()
 	seed.Seed()
 	// Route for community-related endpoints
-	router.HandleFunc("/Communities", models.GetCommunities).Methods("GET")
-	router.HandleFunc("/Communities/{id}", models.GetCommunity).Methods("GET")
-	router.HandleFunc("/Communities", models.CreateCommunity).Methods("POST")
-	router.HandleFunc("/Communities/{id}", models.UpdateCommunity).Methods("PATCH")
-	router.HandleFunc("/Communities/{id}", models.DeleteCommunity).Methods("DELETE")
+	router.HandleFunc("/communities", models.GetCommunities).Methods("GET")
+	router.HandleFunc("/communities/{id}", models.GetCommunity).Methods("GET")
+	router.HandleFunc("/communities", models.CreateCommunity).Methods("POST")
+	router.HandleFunc("/communities/{id}", models.UpdateCommunity).Methods("PATCH")
+	router.HandleFunc("/communities/{id}", models.DeleteCommunity).Methods("DELETE")
 
 	// Route for player-related endpoints
-	router.HandleFunc("/Players", models.GetPlayers).Methods("GET")
-	router.HandleFunc("/Players/{id}", models.GetPlayer).Methods("GET")
-	router.HandleFunc("/Players", models.CreatePlayer).Methods("POST")
-	router.HandleFunc("/Players/{id}", models.UpdatePlayer).Methods("PATCH")
-	router.HandleFunc("/Players/{id}", models.DeletePlayer).Methods("DELETE")
+	router.HandleFunc("/players", models.GetPlayers).Methods("GET")
+	router.HandleFunc("/players/{id}", models.GetPlayer).Methods("GET")
+	router.HandleFunc("/players", models.CreatePlayer).Methods("POST")
+	router.HandleFunc("/players/{id}", models.UpdatePlayer).Methods("PATCH")
+	router.HandleFunc("/players/{id}", models.DeletePlayer).Methods("DELETE")
 
 	fmt.Printf("Go Backend Service initialized at port %s\n", port)
 	log.Fatal(http.ListenAndServe(port, router))

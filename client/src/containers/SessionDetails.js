@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Grid, TextField, IconButton, Icon } from '@material-ui/core';
+import { Button, Grid, TextField, IconButton, Icon, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '../components/AppBar';
 import { connect } from 'react-redux';
@@ -22,22 +22,17 @@ const styles = {
   },
 };
 
-class PlayerDetails extends Component {
+class SessionDetails extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       updatedAttributes: {
-        id:  this.props.player.id || null,
-        name: this.props.player.name || '',
-        ratings: this.props.player.ratings || 5,
-        isDirty: false,
+        id: '001',
+        isActive: true,
+
       },
     };
-
-    this.handleNameTextfieldChange = this.handleNameTextfieldChange.bind(this);
-    this.handleEditRatings = this.handleEditRatings.bind(this);
-    this.setUpdatedAttributes = this.setUpdatedAttributes.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -71,7 +66,7 @@ class PlayerDetails extends Component {
 
   render() {
     const { classes } = this.props;
-    const title = this.props.match.params.id !== 'new' ? this.props.player.name : 'New Player';
+    const title = this.props.match.params.id !== 'new' ? this.props.player.name : 'Current Session';
     return (
       <div className={classes.container}>
         <AppBar title={title} rightButton={{
@@ -81,32 +76,9 @@ class PlayerDetails extends Component {
         }}/>
         <Grid container spacing={24} alignItems="center">
           <Grid item xs={12}>
-            <TextField
-              label="Full Name"
-              fullWidth
-              value={this.state.updatedAttributes.name}
-              onChange={this.handleNameTextfieldChange}
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <IconButton
-              className={classes.chevrons}
-              onClick={() => this.handleEditRatings(-1)}
-              disabled={this.state.updatedAttributes.ratings <= 0}
-            >
-              <ChevronLeft />
-            </IconButton>
-          </Grid>
-          <Grid item xs={8} className={classes.ratingsGridItem}>
-            <StarRatings onStarChange={newRating => this.handleEditRatings(newRating - this.state.updatedAttributes.ratings)} justStars ratings={this.state.updatedAttributes.ratings} />
-          </Grid>
-          <Grid item xs={2}>
-            <IconButton className={classes.chevrons}
-              onClick={() => this.handleEditRatings(1)}
-              disabled={this.state.updatedAttributes.ratings >= 10}
-            >
-              <ChevronRight />
-            </IconButton>
+            <Typography variant="display1">New session has started</Typography>
+            <Typography variant="subheading">Rate player's performance for this game. 
+            Your ratings will help us get some insight of the players performance trend and adjust the ratings overtime.</Typography>
           </Grid>
         </Grid>
       </div>
@@ -124,4 +96,4 @@ const mapDispatchToProps = dispatch => ({
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PlayerDetails));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SessionDetails));
