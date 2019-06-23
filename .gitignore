@@ -23,3 +23,6 @@ yarn-error.log*
 
 # Installed modules
 server/vendor/ 
+
+server/go.sum
+server/dist
