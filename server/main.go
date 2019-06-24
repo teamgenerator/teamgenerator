@@ -59,25 +59,25 @@ func main() {
 	router.HandleFunc("/users/{id}", models.DeleteUser).Methods("DELETE")
 
 	// Route for session-related endpoints
-	router.HandleFunc("/session", models.GetSessions).Methods("GET")
-	router.HandleFunc("/session/{id}", models.GetSession).Methods("GET")
-	router.HandleFunc("/session", models.CreateSession).Methods("POST")
-	router.HandleFunc("/session/{id}", models.UpdateSession).Methods("PATCH")
-	router.HandleFunc("/session/{id}", models.DeleteSession).Methods("DELETE")
+	router.HandleFunc("/sessions", models.GetSessions).Methods("GET")
+	router.HandleFunc("/sessions/{id}", models.GetSession).Methods("GET")
+	router.HandleFunc("/sessions", models.CreateSession).Methods("POST")
+	router.HandleFunc("/sessions/{id}", models.UpdateSession).Methods("PATCH")
+	router.HandleFunc("/sessions/{id}", models.DeleteSession).Methods("DELETE")
 
 	// Route for sessionPlayer-related endpoints
-	router.HandleFunc("/session-player", models.GetSessionPlayers).Methods("GET")
-	router.HandleFunc("/session-player/{id}", models.GetSessionPlayer).Methods("GET")
-	router.HandleFunc("/session-player", models.CreateSessionPlayer).Methods("POST")
-	router.HandleFunc("/session-player/{id}", models.UpdateSessionPlayer).Methods("PATCH")
-	router.HandleFunc("/session-player/{id}", models.DeleteSessionPlayer).Methods("DELETE")
+	router.HandleFunc("/session-players", models.GetSessionPlayers).Methods("GET")
+	router.HandleFunc("/session-players/{id}", models.GetSessionPlayer).Methods("GET")
+	router.HandleFunc("/session-players", models.CreateSessionPlayer).Methods("POST")
+	router.HandleFunc("/session-players/{id}", models.UpdateSessionPlayer).Methods("PATCH")
+	router.HandleFunc("/session-players/{id}", models.DeleteSessionPlayer).Methods("DELETE")
 
 	// Route for rating-related endpoints
-	router.HandleFunc("/rating", models.GetRatings).Methods("GET")
-	router.HandleFunc("/rating/{id}", models.GetRating).Methods("GET")
-	router.HandleFunc("/rating", models.CreateRating).Methods("POST")
-	router.HandleFunc("/rating/{id}", models.UpdateRating).Methods("PATCH")
-	router.HandleFunc("/rating/{id}", models.DeleteRating).Methods("DELETE")
+	router.HandleFunc("/ratings", models.GetRatings).Methods("GET")
+	router.HandleFunc("/ratings/{id}", models.GetRating).Methods("GET")
+	router.HandleFunc("/ratings", models.CreateRating).Methods("POST")
+	router.HandleFunc("/ratings/{id}", models.UpdateRating).Methods("PATCH")
+	router.HandleFunc("/ratings/{id}", models.DeleteRating).Methods("DELETE")
 
 	fmt.Printf("Go Backend Service initialized at port %s\n", port)
 	log.Fatal(http.ListenAndServe(port, router))
