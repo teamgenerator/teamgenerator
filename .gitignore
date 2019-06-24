@@ -26,3 +26,5 @@ server/vendor/
 
 server/go.sum
 server/dist
+
+.vscode/
