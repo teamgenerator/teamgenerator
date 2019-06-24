@@ -3,6 +3,7 @@ package models
 import (
 	"encoding/json"
 	"net/http"
+	"fmt"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -30,7 +31,13 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 func GetUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var user User
-	db.DB.First(&user, params["id"])
+	result := db.DB.First(&user, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("User with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	json.NewEncoder(w).Encode(&user)
 }
 
@@ -38,7 +45,12 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 func CreateUser(w http.ResponseWriter, r *http.Request) {
 	var user User
 	json.NewDecoder(r.Body).Decode(&user)
-	db.DB.Create(&user)
+	result := db.DB.Create(&user)
+	if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+		return 
+	}
+
 	json.NewEncoder(w).Encode(&user)
 }
 
@@ -47,9 +59,20 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
 	var user User
-	db.DB.First(&user, params["id"])
+	result := db.DB.First(&user, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("User with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	json.NewDecoder(r.Body).Decode(&user)
-	db.DB.Save(&user)
+	result = db.DB.Save(&user)
+	if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+		return 
+	}
+
 	json.NewEncoder(w).Encode(&user)
 }
 
@@ -58,9 +81,19 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
 	var user User
-	db.DB.First(&user, params["id"])
+	result := db.DB.First(&user, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("User with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	if user.ID != 0 {
-		db.DB.Delete(&user)
+		result = db.DB.Delete(&user)
+		if result.Error != nil {
+			http.Error(w, result.Error.Error(), http.StatusBadRequest)
+			return 
+		}
 	}
 	json.NewEncoder(w).Encode(&user)
 }
