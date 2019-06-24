@@ -1,0 +1,803 @@
+{
+	"info": {
+		"_postman_id": "3cea3adf-3333-405a-be8b-c9024ec67abe",
+		"name": "TeamGenerator",
+		"description": "Teamgenerator: A balanced randomizer for any team sport event",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Players",
+			"item": [
+				{
+					"name": "Post Player",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Nico Alimin 4\",\n  \"ratings\": 10,\n  \"community_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/players",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"players"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Players",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/players",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"players"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Player",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/Communities/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"Communities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Single Player",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Nico Utama\",\n\t\"ratings\": 11\n}"
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/players/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"players",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Single Player",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/players/15",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"players",
+								"15"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Communities",
+			"item": [
+				{
+					"name": "Post Single Community",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Basketball Thursdays\",\n\t\"location\": \"Richmond Oval\"\n}"
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/communities",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"communities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Communities",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/communities",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"communities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Community",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/communities/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"communities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Single Community",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Update\"\n}"
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/communities/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"communities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Single Community",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/communities/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"communities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ratings",
+			"item": [
+				{
+					"name": "Post Single Rating",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"rating_gain\": 10,\n\t\"player_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/ratings",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Ratings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/ratings",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Rating",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/ratings/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"ratings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Single Rating",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"rating_gain\": 2\n}"
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/ratings/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"ratings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Single Rating",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/ratings/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"ratings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sessions",
+			"item": [
+				{
+					"name": "Post Single Session",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"is_active\": false,\n\t\"community_id\": 2\n}"
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/sessions",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Session",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/sessions/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"sessions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Sessions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/sessions",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Single Session",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"is_active\": false\n}"
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/sessions/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"sessions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Single Session",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/sessions/2",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"sessions",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SessionPlayers",
+			"item": [
+				{
+					"name": "Post Single SessionPlayer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"player_id\": 1,\n\t\"community_id\": 1,\n\t\"rating\": 10,\n\t\"form\": 10,\n\t\"form_change\": 4\n}"
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/session-players",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"session-players"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Session Players",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/session-players",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"session-players"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single SessionPlayer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/session-players/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"session-players",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch SIngle Session Player",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"player_id\": 1,\n\t\"community_id\": 1,\n\t\"rating\": 10,\n\t\"form\": 20,\n\t\"form_change\": 14\n}"
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/session-players/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"session-players",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete SessionPlayer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/session-players/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"session-players",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Post Users",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"nicoalimin\",\n\t\"name\": \"Nico Alimin\",\n\t\"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/users",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/users",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/users/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Single User",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"nicoalimin\",\n\t\"name\": \"Nico Alimin\",\n\t\"password\": \"updated password\"\n}"
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/users/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Single User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Host}}:{{ApiPort}}/users/1",
+							"host": [
+								"{{Host}}"
+							],
+							"port": "{{ApiPort}}",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
