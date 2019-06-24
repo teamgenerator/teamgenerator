@@ -53,7 +53,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&user)
 }
 
-// DeleteUser function to delete a single communtiy by ID
+// DeleteUser function to delete a single user by ID
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
