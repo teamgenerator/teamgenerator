@@ -3,6 +3,7 @@ package models
 import (
 	"encoding/json"
 	"net/http"
+	"fmt"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -31,7 +32,14 @@ func GetPlayers(w http.ResponseWriter, r *http.Request) {
 func GetPlayer(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var player Player
-	db.DB.First(&player, params["id"])
+	result := db.DB.First(&player, params["id"])
+	
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("Player with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	json.NewEncoder(w).Encode(&player)
 }
 
@@ -39,7 +47,12 @@ func GetPlayer(w http.ResponseWriter, r *http.Request) {
 func CreatePlayer(w http.ResponseWriter, r *http.Request) {
 	var player Player
 	json.NewDecoder(r.Body).Decode(&player)
-	db.DB.Create(&player)
+
+	result := db.DB.Create(&player)
+	if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+		return 
+	}
 	json.NewEncoder(w).Encode(&player)
 }
 
@@ -47,9 +60,21 @@ func CreatePlayer(w http.ResponseWriter, r *http.Request) {
 func UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var player Player
-	db.DB.First(&player, params["id"])
+	result := db.DB.First(&player, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("Player with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	json.NewDecoder(r.Body).Decode(&player)
-	db.DB.Save(&player)
+	
+	result = db.DB.Save(&player)
+	if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+		return 
+	}
+
 	json.NewEncoder(w).Encode(&player)
 }
 
@@ -57,9 +82,19 @@ func UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 func DeletePlayer(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var player Player
-	db.DB.First(&player, params["id"])
+	result := db.DB.First(&player, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("Player with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	if player.ID != 0 {
-		db.DB.Delete(&player)
+		result = db.DB.Delete(&player)
+		if result.Error != nil {
+			http.Error(w, result.Error.Error(), http.StatusBadRequest)
+			return 
+		}
 	}
 	json.NewEncoder(w).Encode(&player)
 }
