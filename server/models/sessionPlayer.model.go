@@ -14,11 +14,11 @@ type SessionPlayer struct {
 	ID          uint `gorm:"primary_key"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
-	PlayerID    int
-	CommunityID int
+	PlayerID    int `json:"player_id"`
+	CommunityID int `json:"community_id"`
 	Rating      int
 	Form        int
-	FormChange  int
+	FormChange  int `json:"form_change"`
 }
 
 // GetSessionPlayers function to return all ratings

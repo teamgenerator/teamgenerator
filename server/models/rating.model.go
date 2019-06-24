@@ -11,8 +11,8 @@ import (
 // Rating object
 type Rating struct {
 	ID         uint `gorm:"primary_key"`
-	RatingGain uint
-	PlayerID   uint
+	RatingGain uint `json:"rating_gain"`
+	PlayerID   uint `json:"player_id"`
 }
 
 // GetRatings function to return all ratings

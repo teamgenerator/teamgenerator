@@ -17,7 +17,7 @@ type Player struct {
 	Name        string
 	Ratings     int
 	Form        int
-	CommunityID int
+	CommunityID int `json:"community_id"`
 }
 
 // GetPlayers function to return all players
