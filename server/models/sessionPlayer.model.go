@@ -3,6 +3,7 @@ package models
 import (
 	"encoding/json"
 	"net/http"
+	"fmt"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -32,7 +33,12 @@ func GetSessionPlayers(w http.ResponseWriter, r *http.Request) {
 func GetSessionPlayer(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var sessionPlayer SessionPlayer
-	db.DB.First(&sessionPlayer, params["id"])
+	result := db.DB.First(&sessionPlayer, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("SessionPlayer with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
 	json.NewEncoder(w).Encode(&sessionPlayer)
 }
 
@@ -40,7 +46,12 @@ func GetSessionPlayer(w http.ResponseWriter, r *http.Request) {
 func CreateSessionPlayer(w http.ResponseWriter, r *http.Request) {
 	var sessionPlayer SessionPlayer
 	json.NewDecoder(r.Body).Decode(&sessionPlayer)
-	db.DB.Create(&sessionPlayer)
+	result := db.DB.Create(&sessionPlayer)
+	if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+		return 
+	}
+
 	json.NewEncoder(w).Encode(&sessionPlayer)
 }
 
@@ -48,9 +59,20 @@ func CreateSessionPlayer(w http.ResponseWriter, r *http.Request) {
 func UpdateSessionPlayer(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var sessionPlayer SessionPlayer
-	db.DB.First(&sessionPlayer, params["id"])
+	result := db.DB.First(&sessionPlayer, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("SessionPlayer with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	json.NewDecoder(r.Body).Decode(&sessionPlayer)
-	db.DB.Save(&sessionPlayer)
+	result = db.DB.Save(&sessionPlayer)
+	if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+		return 
+	}
+
 	json.NewEncoder(w).Encode(&sessionPlayer)
 }
 
@@ -58,9 +80,19 @@ func UpdateSessionPlayer(w http.ResponseWriter, r *http.Request) {
 func DeleteSessionPlayer(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var sessionPlayer SessionPlayer
-	db.DB.First(&sessionPlayer, params["id"])
+	result := db.DB.First(&sessionPlayer, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("SessionPlayer with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	if sessionPlayer.ID != 0 {
-		db.DB.Delete(&sessionPlayer)
+		result = db.DB.Delete(&sessionPlayer)
+		if result.Error != nil {
+			http.Error(w, result.Error.Error(), http.StatusBadRequest)
+			return 
+		}
 	}
 	json.NewEncoder(w).Encode(&sessionPlayer)
 }
