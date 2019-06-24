@@ -3,6 +3,7 @@ package models
 import (
 	"encoding/json"
 	"net/http"
+	"fmt"
 
 	"github.com/gorilla/mux"
 	"github.com/teamgenerator/teamgenerator/server/db"
@@ -26,7 +27,13 @@ func GetRatings(w http.ResponseWriter, r *http.Request) {
 func GetRating(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var rating Rating
-	db.DB.First(&rating, params["id"])
+	result := db.DB.First(&rating, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("Rating with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	json.NewEncoder(w).Encode(&rating)
 }
 
@@ -34,7 +41,12 @@ func GetRating(w http.ResponseWriter, r *http.Request) {
 func CreateRating(w http.ResponseWriter, r *http.Request) {
 	var rating Rating
 	json.NewDecoder(r.Body).Decode(&rating)
-	db.DB.Create(&rating)
+	result := db.DB.Create(&rating)
+	if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+		return 
+	}
+
 	json.NewEncoder(w).Encode(&rating)
 }
 
@@ -42,9 +54,21 @@ func CreateRating(w http.ResponseWriter, r *http.Request) {
 func UpdateRating(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var rating Rating
-	db.DB.First(&rating, params["id"])
+	result := db.DB.First(&rating, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("Rating with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	json.NewDecoder(r.Body).Decode(&rating)
-	db.DB.Save(&rating)
+	
+	result = db.DB.Save(&rating)
+	if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+		return 
+	}
+
 	json.NewEncoder(w).Encode(&rating)
 }
 
@@ -52,9 +76,19 @@ func UpdateRating(w http.ResponseWriter, r *http.Request) {
 func DeleteRating(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var rating Rating
-	db.DB.First(&rating, params["id"])
+	result := db.DB.First(&rating, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("Rating with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	if rating.ID != 0 {
-		db.DB.Delete(&rating)
+		result = db.DB.Delete(&rating)
+		if result.Error != nil {
+			http.Error(w, result.Error.Error(), http.StatusBadRequest)
+			return 
+		}
 	}
 	json.NewEncoder(w).Encode(&rating)
 }
