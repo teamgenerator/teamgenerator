@@ -1,14 +1,3 @@
-////
-// author: Nico Alimin (nicoalimin@hotmail.com)
-// date: Tuesday, 14th August 2018 1:12:38 am
-// lastModifiedBy: Nico Alimin (nicoalimin@hotmail.com)
-// lastModifiedTime: Tuesday, 14th August 2018 1:12:38 am
-//
-// DESCRIPTION
-//
-// copyright (c) 2018 Nico Alimin
-////
-
 package db
 
 import (
@@ -22,7 +11,6 @@ var DB *gorm.DB
 
 // Open opens the database connection
 func Open(pgUser string, pgPassword string, pgDatabase string, pgHost string, pgPort string) {
-
 	// Initializes the connection string.
 	connectionString :=
 		fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", pgHost, pgPort, pgUser, pgPassword, pgDatabase)

@@ -1,15 +1,3 @@
-////
-// author: Nico Alimin (nicoalimin@hotmail.com)
-// date: Friday, 17th August 2018 12:54:40 am
-// lastModifiedBy: Nico Alimin (nicoalimin@hotmail.com)
-// lastModifiedTime: Friday, 17th August 2018 12:54:40 am
-//
-// DESCRIPTION
-//
-// copyright (c) 2018 Nico Alimin
-////
-////
-
 package models
 
 import (

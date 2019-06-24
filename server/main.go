@@ -1,21 +1,9 @@
-////
-// author: Nico Alimin (nicoalimin@gmail.com)
-// date: Sunday, 5th August 2018 12:48:35 am
-// lastModifiedBy: Nico Alimin (nicoalimin@gmail.com)
-// lastModifiedTime: Sunday, 5th August 2018 12:52:42 am
-//
-// DESCRIPTION
-//
-// copyright (c) 2018 Nico Alimin
-////
-
 package main
 
 import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/gorilla/mux"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -27,11 +15,11 @@ import (
 var err error
 
 var (
-	pgUser     = os.Getenv("PG_USER")
-	pgPassword = os.Getenv("PG_PASSWORD")
-	pgDatabase = os.Getenv("PG_DATABASE")
-	pgHost     = os.Getenv("PG_HOST")
-	pgPort     = os.Getenv("PG_PORT")
+	pgUser     = "postgres"
+	pgPassword = "password"
+	pgDatabase = "postgres"
+	pgHost     = "localhost"
+	pgPort     = "5432"
 	port       = ":3030"
 )
 
