@@ -3,6 +3,7 @@ package models
 import (
 	"encoding/json"
 	"net/http"
+	"fmt"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -29,7 +30,13 @@ func GetSessions(w http.ResponseWriter, r *http.Request) {
 func GetSession(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var session Session
-	db.DB.First(&session, params["id"])
+	result := db.DB.First(&session, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("Session with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	json.NewEncoder(w).Encode(&session)
 }
 
@@ -37,7 +44,12 @@ func GetSession(w http.ResponseWriter, r *http.Request) {
 func CreateSession(w http.ResponseWriter, r *http.Request) {
 	var session Session
 	json.NewDecoder(r.Body).Decode(&session)
-	db.DB.Create(&session)
+	result := db.DB.Create(&session)
+	if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+		return 
+	}
+
 	json.NewEncoder(w).Encode(&session)
 }
 
@@ -45,9 +57,20 @@ func CreateSession(w http.ResponseWriter, r *http.Request) {
 func UpdateSession(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var session Session
-	db.DB.First(&session, params["id"])
+	result := db.DB.First(&session, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("Session with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	json.NewDecoder(r.Body).Decode(&session)
-	db.DB.Save(&session)
+	result = db.DB.Save(&session)
+	if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+		return 
+	}
+
 	json.NewEncoder(w).Encode(&session)
 }
 
@@ -55,9 +78,19 @@ func UpdateSession(w http.ResponseWriter, r *http.Request) {
 func DeleteSession(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var session Session
-	db.DB.First(&session, params["id"])
+	result := db.DB.First(&session, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("Session with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	if session.ID != 0 {
-		db.DB.Delete(&session)
+		result = db.DB.Delete(&session)
+		if result.Error != nil {
+			http.Error(w, result.Error.Error(), http.StatusBadRequest)
+			return 
+		}
 	}
 	json.NewEncoder(w).Encode(&session)
 }
