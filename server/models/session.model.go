@@ -18,6 +18,13 @@ type Session struct {
 	CommunityID int
 }
 
+// GetSessions function to return all sessions
+func GetSessions(w http.ResponseWriter, r *http.Request) {
+	var sessions []Session
+	db.DB.Find(&sessions)
+	json.NewEncoder(w).Encode(&sessions)
+}
+
 // GetSession function to get a single Session
 func GetSession(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
