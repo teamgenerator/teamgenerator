@@ -2,8 +2,8 @@ package models
 
 import (
 	"encoding/json"
-	"net/http"
 	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -48,7 +48,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	result := db.DB.Create(&user)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusBadRequest)
-		return 
+		return
 	}
 
 	json.NewEncoder(w).Encode(&user)
@@ -70,7 +70,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	result = db.DB.Save(&user)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusBadRequest)
-		return 
+		return
 	}
 
 	json.NewEncoder(w).Encode(&user)
@@ -92,7 +92,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 		result = db.DB.Delete(&user)
 		if result.Error != nil {
 			http.Error(w, result.Error.Error(), http.StatusBadRequest)
-			return 
+			return
 		}
 	}
 	json.NewEncoder(w).Encode(&user)

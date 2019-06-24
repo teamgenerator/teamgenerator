@@ -46,7 +46,7 @@ func CreateCommunity(w http.ResponseWriter, r *http.Request) {
 	result := db.DB.Create(&community)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusBadRequest)
-		return 
+		return
 	}
 	json.NewEncoder(w).Encode(&community)
 }
@@ -67,7 +67,7 @@ func UpdateCommunity(w http.ResponseWriter, r *http.Request) {
 	result = db.DB.Save(&community)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusBadRequest)
-		return 
+		return
 	}
 
 	json.NewEncoder(w).Encode(&community)
@@ -88,7 +88,7 @@ func DeleteCommunity(w http.ResponseWriter, r *http.Request) {
 		result = db.DB.Delete(&community)
 		if result.Error != nil {
 			http.Error(w, result.Error.Error(), http.StatusBadRequest)
-			return 
+			return
 		}
 	}
 	json.NewEncoder(w).Encode(&community)

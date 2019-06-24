@@ -2,8 +2,8 @@ package models
 
 import (
 	"encoding/json"
-	"net/http"
 	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -49,7 +49,7 @@ func CreateSessionPlayer(w http.ResponseWriter, r *http.Request) {
 	result := db.DB.Create(&sessionPlayer)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusBadRequest)
-		return 
+		return
 	}
 
 	json.NewEncoder(w).Encode(&sessionPlayer)
@@ -70,7 +70,7 @@ func UpdateSessionPlayer(w http.ResponseWriter, r *http.Request) {
 	result = db.DB.Save(&sessionPlayer)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusBadRequest)
-		return 
+		return
 	}
 
 	json.NewEncoder(w).Encode(&sessionPlayer)
@@ -91,7 +91,7 @@ func DeleteSessionPlayer(w http.ResponseWriter, r *http.Request) {
 		result = db.DB.Delete(&sessionPlayer)
 		if result.Error != nil {
 			http.Error(w, result.Error.Error(), http.StatusBadRequest)
-			return 
+			return
 		}
 	}
 	json.NewEncoder(w).Encode(&sessionPlayer)
