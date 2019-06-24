@@ -1,14 +1,3 @@
-////
-// author: Nico Alimin (nicoalimin@hotmail.com)
-// date: Friday, 17th August 2018 1:10:49 am
-// lastModifiedBy: Nico Alimin (nicoalimin@hotmail.com)
-// lastModifiedTime: Friday, 17th August 2018 1:10:49 am
-//
-// DESCRIPTION
-//
-// copyright (c) 2018 Nico Alimin
-////
-
 package seed
 
 import (
