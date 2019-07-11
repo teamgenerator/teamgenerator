@@ -51,13 +51,41 @@ func main() {
 	router.HandleFunc("/players/{id}", models.UpdatePlayer).Methods("PATCH")
 	router.HandleFunc("/players/{id}", models.DeletePlayer).Methods("DELETE")
 
+	// Route for user-related endpoints
+	router.HandleFunc("/users", models.GetUsers).Methods("GET")
+	router.HandleFunc("/users/{id}", models.GetUser).Methods("GET")
+	router.HandleFunc("/users", models.CreateUser).Methods("POST")
+	router.HandleFunc("/users/{id}", models.UpdateUser).Methods("PATCH")
+	router.HandleFunc("/users/{id}", models.DeleteUser).Methods("DELETE")
+
+	// Route for session-related endpoints
+	router.HandleFunc("/sessions", models.GetSessions).Methods("GET")
+	router.HandleFunc("/sessions/{id}", models.GetSession).Methods("GET")
+	router.HandleFunc("/sessions", models.CreateSession).Methods("POST")
+	router.HandleFunc("/sessions/{id}", models.UpdateSession).Methods("PATCH")
+	router.HandleFunc("/sessions/{id}", models.DeleteSession).Methods("DELETE")
+
+	// Route for sessionPlayer-related endpoints
+	router.HandleFunc("/session-players", models.GetSessionPlayers).Methods("GET")
+	router.HandleFunc("/session-players/{id}", models.GetSessionPlayer).Methods("GET")
+	router.HandleFunc("/session-players", models.CreateSessionPlayer).Methods("POST")
+	router.HandleFunc("/session-players/{id}", models.UpdateSessionPlayer).Methods("PATCH")
+	router.HandleFunc("/session-players/{id}", models.DeleteSessionPlayer).Methods("DELETE")
+
+	// Route for rating-related endpoints
+	router.HandleFunc("/ratings", models.GetRatings).Methods("GET")
+	router.HandleFunc("/ratings/{id}", models.GetRating).Methods("GET")
+	router.HandleFunc("/ratings", models.CreateRating).Methods("POST")
+	router.HandleFunc("/ratings/{id}", models.UpdateRating).Methods("PATCH")
+	router.HandleFunc("/ratings/{id}", models.DeleteRating).Methods("DELETE")
+
 	fmt.Printf("Go Backend Service initialized at port %s\n", port)
 	log.Fatal(http.ListenAndServe(port, router))
 }
 
 // Migrate the models
 func migrateModels() {
-	db.DB.AutoMigrate(&models.Player{}, &models.Community{}, &models.SessionPlayer{}, &models.Session{})
+	db.DB.AutoMigrate(&models.Player{}, &models.Community{}, &models.SessionPlayer{}, &models.Session{}, &models.User{}, &models.Rating{})
 	fmt.Printf("Successfully migrated models\n")
 }
 
@@ -67,5 +95,6 @@ func addRelations() {
 	db.DB.Model(&models.Session{}).AddForeignKey("community_id", "communities(id)", "CASCADE", "CASCADE")
 	db.DB.Model(&models.SessionPlayer{}).AddForeignKey("community_id", "communities(id)", "CASCADE", "CASCADE")
 	db.DB.Model(&models.SessionPlayer{}).AddForeignKey("player_id", "players(id)", "CASCADE", "CASCADE")
+	db.DB.Model(&models.Rating{}).AddForeignKey("player_id", "players(id)", "CASCADE", "CASCADE")
 	fmt.Printf("Successfully added foreign keys\n")
 }

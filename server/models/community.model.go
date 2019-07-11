@@ -2,6 +2,7 @@ package models
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -29,7 +30,12 @@ func GetCommunities(w http.ResponseWriter, r *http.Request) {
 func GetCommunity(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var community Community
-	db.DB.First(&community, params["id"])
+	result := db.DB.First(&community, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("Community with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
 	json.NewEncoder(w).Encode(&community)
 }
 
@@ -37,7 +43,11 @@ func GetCommunity(w http.ResponseWriter, r *http.Request) {
 func CreateCommunity(w http.ResponseWriter, r *http.Request) {
 	var community Community
 	json.NewDecoder(r.Body).Decode(&community)
-	db.DB.Create(&community)
+	result := db.DB.Create(&community)
+	if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+		return
+	}
 	json.NewEncoder(w).Encode(&community)
 }
 
@@ -45,9 +55,21 @@ func CreateCommunity(w http.ResponseWriter, r *http.Request) {
 func UpdateCommunity(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var community Community
-	db.DB.First(&community, params["id"])
+
+	result := db.DB.First(&community, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("Community with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	json.NewDecoder(r.Body).Decode(&community)
-	db.DB.Save(&community)
+	result = db.DB.Save(&community)
+	if result.Error != nil {
+		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+		return
+	}
+
 	json.NewEncoder(w).Encode(&community)
 }
 
@@ -55,9 +77,19 @@ func UpdateCommunity(w http.ResponseWriter, r *http.Request) {
 func DeleteCommunity(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var community Community
-	db.DB.First(&community, params["id"])
+	result := db.DB.First(&community, params["id"])
+	if result.Error != nil {
+		errMsg := fmt.Sprintf("Community with id %s is not found", params["id"])
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
 	if community.ID != 0 {
-		db.DB.Delete(&community)
+		result = db.DB.Delete(&community)
+		if result.Error != nil {
+			http.Error(w, result.Error.Error(), http.StatusBadRequest)
+			return
+		}
 	}
 	json.NewEncoder(w).Encode(&community)
 }
