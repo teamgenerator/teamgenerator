@@ -37,7 +37,9 @@ services:
     networks:
       - teamgen-net
     volumes:
-      - teamgen-psql-volume:/var/lib/posgresql/data
+      # OLD ONE
+      # - teamgen-psql-volume:/var/lib/posgresql/data
+      - $HOME/Code/volumes/postgres:/var/lib/postgresql/data
   
   # Database visualization
   adminer:
