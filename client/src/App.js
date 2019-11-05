@@ -8,6 +8,7 @@ import PlayersScreen from "./containers/PlayersScreen";
 import PlayerDetails from "./containers/PlayerDetails";
 import GenerateScreen from "./containers/GenerateScreen";
 import SessionDetails from "./containers/SessionDetails";
+import SessionIndex from "./containers/SessionIndex";
 
 const store = configureStore();
 class App extends Component {
@@ -27,7 +28,7 @@ class App extends Component {
             <Route exact path="/players" component={PlayersScreen} />
             <Route path="/players/:id" component={PlayerDetails} />
             <Route exact path="/generate" component={GenerateScreen} />
-            <Route exact path="/sessions" component={SessionDetails} />
+            <Route exact path="/sessions" component={SessionIndex} />
             <Route path="/sessions/:id" component={SessionDetails} />
           </Switch>
         </BrowserRouter>
