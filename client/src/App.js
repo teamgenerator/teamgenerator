@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import configureStore from './store';
+import store from './store';
 
 import HomeScreen from './containers/HomeScreen';
 import PlayersScreen from './containers/PlayersScreen';
@@ -9,7 +9,6 @@ import PlayerDetails from './containers/PlayerDetails';
 import GenerateScreen from './containers/GenerateScreen';
 import SessionDetails from './containers/SessionDetails';
 
-const store = configureStore();
 class App extends Component {
 
   constructor(props) {
