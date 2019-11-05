@@ -46,10 +46,6 @@
 								"value": "application/json"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/players",
 							"host": [
@@ -68,10 +64,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/Communities/1",
 							"host": [
@@ -119,7 +111,10 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/players/15",
 							"host": [
@@ -176,10 +171,6 @@
 								"value": "application/json"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/communities",
 							"host": [
@@ -198,10 +189,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/communities/1",
 							"host": [
@@ -249,7 +236,10 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/communities/1",
 							"host": [
@@ -303,10 +293,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/ratings",
 							"host": [
@@ -325,10 +311,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/ratings/1",
 							"host": [
@@ -439,10 +421,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/sessions/1",
 							"host": [
@@ -462,10 +440,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/sessions",
 							"host": [
@@ -575,10 +549,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/session-players",
 							"host": [
@@ -597,10 +567,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/session-players/1",
 							"host": [
@@ -649,10 +615,6 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/session-players/1",
 							"host": [
@@ -705,10 +667,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/users",
 							"host": [
@@ -727,10 +685,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/users/1",
 							"host": [
@@ -779,10 +733,6 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/users/1",
 							"host": [
