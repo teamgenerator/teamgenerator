@@ -1,20 +1,18 @@
 import React, { Component } from "react";
 import {
-  Button,
   Grid,
-  TextField,
-  IconButton,
-  Icon,
-  Typography
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "../components/AppBar";
 import { connect } from "react-redux";
 import Save from "@material-ui/icons/Save";
-import { diff } from "deep-object-diff";
-import StarRatings from "../components/StarRatings";
-import ChevronLeft from "@material-ui/icons/ChevronLeft";
 import ChevronRight from "@material-ui/icons/ChevronRight";
+import { diff } from "deep-object-diff";
 
 const styles = {
   container: {
@@ -72,12 +70,26 @@ class SessionIndex extends Component {
     });
   }
 
+  renderSessionListItem(
+    sessionKey,
+    sessionName,
+    sessionDate,
+    sessionNumPlayers
+  ) {
+    return (
+      <React.Fragment key={sessionKey}>
+        <ListItem>
+          <ListItemText primary={sessionName} />
+          <ListItemSecondaryAction>
+            <ChevronRight />
+          </ListItemSecondaryAction>
+        </ListItem>
+      </React.Fragment>
+    );
+  }
+
   render() {
     const { classes } = this.props;
-    const title =
-      this.props.match.params.id !== "new"
-        ? this.props.player.name
-        : "Current Session";
     return (
       <div className={classes.container}>
         <AppBar
@@ -88,7 +100,17 @@ class SessionIndex extends Component {
             disabled: !this.state.isDirty
           }}
         />
-        <Grid container spacing={24} alignItems="center">
+        <List>
+          {this.props.sesionsArray.map(session => {
+            this.renderSessionListItem(
+              session.id,
+              this.props.activeCommunity,
+              session.Date,
+              1
+            );
+          })}
+        </List>
+        {/* <Grid container spacing={24} alignItems="center">
           <Grid item xs={12}>
             <Typography variant="display1">New session has started</Typography>
             <Typography variant="subheading">
@@ -97,17 +119,16 @@ class SessionIndex extends Component {
               ratings overtime.
             </Typography>
           </Grid>
-        </Grid>
+        </Grid> */}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  player:
-    Object.values(state.players).find(
-      player => player.id === ownProps.match.params.id
-    ) || {}
+const mapStateToProps = state => ({
+  sessions: state.sessions,
+  sesionsArray: Object.values(state.sessions),
+  activeCommunity: state.activeCommunity
 });
 
 const mapDispatchToProps = dispatch => ({});
