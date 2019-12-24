@@ -4,11 +4,6 @@ const defaultUI = {
 
 const ui = (state = defaultUI, action) => {
   switch (action.type) {
-    case "UI_COMMUNITY_GET": {
-      return {
-        ...state
-      };
-    }
     case "UI_COMMUNITY_SET": {
       const newState = {
         ...state,
