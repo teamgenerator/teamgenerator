@@ -150,7 +150,7 @@ class CustomAppBar extends Component {
               >
                 {this.renderListItem(<Home />, 'Home', '/')}
                 {this.renderListItem(<DirectionsRun />, 'Players', '/players')}
-                {this.renderListItem(<AssignmentTurnedIn />, 'Sessions')}
+                {this.renderListItem(<AssignmentTurnedIn />, 'Sessions', '/sessions')}
               </List>
             </Drawer>
           : null}
