@@ -25,6 +25,7 @@ import ChevronRight from '@material-ui/icons/ChevronRight';
 import Casino from '@material-ui/icons/Casino';
 import TeamPanel from '../components/TeamPanel';
 import generateRandomTeam from '../utils/generateRandomTeam';
+import makeRequestApiActionThread from '../actions/apiRequest';
 
 
 const styles = {
@@ -75,6 +76,10 @@ class GenerateScreen extends Component {
     this.getStepTwoAttributes = this.getStepTwoAttributes.bind(this);
     this.getStepThreeAttributes = this.getStepThreeAttributes.bind(this);
     this.handleGenerateNewTeams = this.handleGenerateNewTeams.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.dispatch(makeRequestApiActionThread("GET", "/players", undefined, "REPLACE", "player"));
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -326,7 +331,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  
+  dispatch,
 });
 
 
