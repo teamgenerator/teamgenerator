@@ -2,8 +2,8 @@ package models
 
 import (
 	"encoding/json"
-	"net/http"
 	"fmt"
+	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/teamgenerator/teamgenerator/server/db"
@@ -12,8 +12,8 @@ import (
 // Rating object
 type Rating struct {
 	ID         uint `gorm:"primary_key"`
-	RatingGain uint `json:"rating_gain"`
-	PlayerID   uint `json:"player_id"`
+	RatingGain uint `json:"RatingGain"`
+	PlayerID   uint `json:"PlayerID"`
 }
 
 // GetRatings function to return all ratings
@@ -44,7 +44,7 @@ func CreateRating(w http.ResponseWriter, r *http.Request) {
 	result := db.DB.Create(&rating)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusBadRequest)
-		return 
+		return
 	}
 
 	json.NewEncoder(w).Encode(&rating)
@@ -62,11 +62,11 @@ func UpdateRating(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewDecoder(r.Body).Decode(&rating)
-	
+
 	result = db.DB.Save(&rating)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusBadRequest)
-		return 
+		return
 	}
 
 	json.NewEncoder(w).Encode(&rating)
@@ -87,7 +87,7 @@ func DeleteRating(w http.ResponseWriter, r *http.Request) {
 		result = db.DB.Delete(&rating)
 		if result.Error != nil {
 			http.Error(w, result.Error.Error(), http.StatusBadRequest)
-			return 
+			return
 		}
 	}
 	json.NewEncoder(w).Encode(&rating)

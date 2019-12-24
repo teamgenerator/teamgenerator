@@ -15,8 +15,8 @@ type Session struct {
 	ID          uint `gorm:"primary_key"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
-	IsActive    bool `json:"is_active"`
-	CommunityID int  `json:"community_id"`
+	IsActive    bool `json:"IsActive"`
+	CommunityID int  `json:"CommunityID"`
 }
 
 // GetSessions function to return all sessions
