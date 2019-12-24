@@ -2,8 +2,8 @@ package models
 
 import (
 	"encoding/json"
-	"net/http"
 	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -18,7 +18,7 @@ type Player struct {
 	Name        string
 	Ratings     int
 	Form        int
-	CommunityID int `json:"community_id"`
+	CommunityID int `json:"CommunityID"`
 }
 
 // GetPlayers function to return all players
@@ -33,7 +33,7 @@ func GetPlayer(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var player Player
 	result := db.DB.First(&player, params["id"])
-	
+
 	if result.Error != nil {
 		errMsg := fmt.Sprintf("Player with id %s is not found", params["id"])
 		http.Error(w, errMsg, http.StatusBadRequest)
@@ -51,7 +51,7 @@ func CreatePlayer(w http.ResponseWriter, r *http.Request) {
 	result := db.DB.Create(&player)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusBadRequest)
-		return 
+		return
 	}
 	json.NewEncoder(w).Encode(&player)
 }
@@ -68,11 +68,11 @@ func UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewDecoder(r.Body).Decode(&player)
-	
+
 	result = db.DB.Save(&player)
 	if result.Error != nil {
 		http.Error(w, result.Error.Error(), http.StatusBadRequest)
-		return 
+		return
 	}
 
 	json.NewEncoder(w).Encode(&player)
@@ -93,7 +93,7 @@ func DeletePlayer(w http.ResponseWriter, r *http.Request) {
 		result = db.DB.Delete(&player)
 		if result.Error != nil {
 			http.Error(w, result.Error.Error(), http.StatusBadRequest)
-			return 
+			return
 		}
 	}
 	json.NewEncoder(w).Encode(&player)
