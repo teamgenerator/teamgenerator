@@ -108,7 +108,7 @@ class SessionIndex extends Component {
 const mapStateToProps = state => ({
   sessions: state.sessions,
   sessionsArray: Object.values(state.sessions),
-  activeCommunity: state.activeCommunity
+  activeCommunity: state.communities[state.ui.activeCommunity]
 });
 
 const mapDispatchToProps = dispatch => ({});
