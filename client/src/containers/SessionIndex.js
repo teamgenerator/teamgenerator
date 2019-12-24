@@ -14,14 +14,15 @@ import { connect } from "react-redux";
 import Save from "@material-ui/icons/Save";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import { diff } from "deep-object-diff";
+import moment from "moment";
 
 const styles = {
   container: {
     display: "flex",
     flexDirection: "column"
   },
-  fontRed: {
-    color: "red"
+  fontBlue: {
+    color: "blue"
   },
   chevrons: {
     left: "50%",
@@ -56,11 +57,12 @@ class SessionIndex extends Component {
   }
 
   renderSessionListItem(sessionKey, sessionDate, sessionNumPlayers) {
+    const parsedSessionDate = moment(sessionDate).format("MMMM Do YYYY");
     return (
       <React.Fragment key={sessionKey}>
         <ListItem button>
-          <ListItemText primary={sessionDate} />
-          <ListItemText secondary={`Num TPlayers: ${sessionNumPlayers}`} />
+          <ListItemText primary={parsedSessionDate} />
+          <ListItemText secondary={`Players: ${sessionNumPlayers}`} />
           <ListItemSecondaryAction>
             <ChevronRight />
           </ListItemSecondaryAction>
@@ -85,14 +87,15 @@ class SessionIndex extends Component {
         <Grid container spacing={24} alignItems="center">
           <Grid item xs={12}>
             <Typography variant="title">
-              <span className={classes.fontRed}>
+              {"Community: "}
+              <span className={classes.fontBlue}>
                 {this.props.activeCommunity.Name}
               </span>
-              {" sessions"}
             </Typography>
           </Grid>
         </Grid>
         <List>
+          {/* TODO: Use actual number of players once session players store is implemented */}
           {this.props.sessionsArray.map(session =>
             this.renderSessionListItem(session.ID, session.CreatedAt, 1)
           )}
