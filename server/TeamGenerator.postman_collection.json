@@ -21,7 +21,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Nico Alimin 4\",\n  \"ratings\": 10,\n  \"community_id\": 1\n}"
+							"raw": "{\n  \"name\": \"Nico Alimin 4\",\n  \"ratings\": 10,\n  \"communityId\": 4\n}"
 						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/players",
@@ -64,34 +64,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{Host}}:{{ApiPort}}/Communities/1",
-							"host": [
-								"{{Host}}"
-							],
-							"port": "{{ApiPort}}",
-							"path": [
-								"Communities",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Patch Single Player",
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Nico Utama\",\n\t\"ratings\": 11\n}"
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/players/1",
 							"host": [
@@ -204,34 +176,6 @@
 					"response": []
 				},
 				{
-					"name": "Patch Single Community",
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Update\"\n}"
-						},
-						"url": {
-							"raw": "{{Host}}:{{ApiPort}}/communities/1",
-							"host": [
-								"{{Host}}"
-							],
-							"port": "{{ApiPort}}",
-							"path": [
-								"communities",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Delete Single Community",
 					"request": {
 						"method": "DELETE",
@@ -311,35 +255,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{Host}}:{{ApiPort}}/ratings/1",
-							"host": [
-								"{{Host}}"
-							],
-							"port": "{{ApiPort}}",
-							"path": [
-								"ratings",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Patch Single Rating",
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"rating_gain\": 2\n}"
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/ratings/1",
 							"host": [
@@ -441,13 +356,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Host}}:{{ApiPort}}/sessions",
+							"raw": "{{Host}}:{{ApiPort}}/communities",
 							"host": [
 								"{{Host}}"
 							],
 							"port": "{{ApiPort}}",
 							"path": [
-								"sessions"
+								"communities"
 							]
 						}
 					},
@@ -582,35 +497,6 @@
 					"response": []
 				},
 				{
-					"name": "Patch SIngle Session Player",
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"player_id\": 1,\n\t\"community_id\": 1,\n\t\"rating\": 10,\n\t\"form\": 20,\n\t\"form_change\": 14\n}"
-						},
-						"url": {
-							"raw": "{{Host}}:{{ApiPort}}/session-players/1",
-							"host": [
-								"{{Host}}"
-							],
-							"port": "{{ApiPort}}",
-							"path": [
-								"session-players",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Delete SessionPlayer",
 					"request": {
 						"method": "DELETE",
@@ -685,35 +571,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{Host}}:{{ApiPort}}/users/1",
-							"host": [
-								"{{Host}}"
-							],
-							"port": "{{ApiPort}}",
-							"path": [
-								"users",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Patch Single User",
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"username\": \"nicoalimin\",\n\t\"name\": \"Nico Alimin\",\n\t\"password\": \"updated password\"\n}"
-						},
 						"url": {
 							"raw": "{{Host}}:{{ApiPort}}/users/1",
 							"host": [
