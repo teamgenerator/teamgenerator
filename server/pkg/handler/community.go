@@ -18,8 +18,11 @@ type CommunityHandler struct {
 
 // GetCommunities function to return all communities
 func (h *CommunityHandler) GetCommunities(w http.ResponseWriter, r *http.Request) {
-	var communities []models.Community
-	db.DB.Find(&communities)
+	communities, err := h.CommunityCore.GetCommunities()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 	json.NewEncoder(w).Encode(&communities)
 }
 
@@ -28,8 +31,7 @@ func (h *CommunityHandler) GetCommunity(w http.ResponseWriter, r *http.Request) 
 	params := mux.Vars(r)
 	community, err := h.CommunityCore.GetCommunity(params["id"])
 	if err != nil {
-		errMsg := fmt.Sprintf("Community with id %s is not found", params["id"])
-		http.Error(w, errMsg, http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	json.NewEncoder(w).Encode(&community)
