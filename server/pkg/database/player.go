@@ -22,6 +22,9 @@ func (r *PlayerRepo) Get(filter core.PlayerFilter) ([]models.Player, error) {
 		if result.Error != nil {
 			return nil, result.Error
 		}
+		if len(players) < 1 {
+			return nil, nil
+		}
 		return players, nil
 	}
 

@@ -53,6 +53,9 @@ func (c *PlayerCore) GetPlayer(ID string) (*Player, error) {
 	if err != nil {
 		return nil, err
 	}
+	if players == nil {
+		return nil, ErrPlayerNotFound
+	}
 	parsedCommunities := castPlayers(players)
 	return &(parsedCommunities[0]), nil
 }

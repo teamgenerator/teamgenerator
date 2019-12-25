@@ -29,11 +29,14 @@ func (h *PlayerHandler) GetPlayers(w http.ResponseWriter, r *http.Request) {
 func (h *PlayerHandler) GetPlayer(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	player, err := h.PlayerCore.GetPlayer(params["id"])
-	if err != nil {
+	switch {
+	case err == nil:
+		json.NewEncoder(w).Encode(&player)
+	case errors.Is(err, core.ErrPlayerNotFound):
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	default:
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
-	json.NewEncoder(w).Encode(&player)
 }
 
 // CreatePlayer function to create a single player
