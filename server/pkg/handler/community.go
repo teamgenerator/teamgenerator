@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -40,11 +41,14 @@ func (h *CommunityHandler) CreateCommunity(w http.ResponseWriter, r *http.Reques
 	var community models.Community
 	json.NewDecoder(r.Body).Decode(&community)
 	createdCommunity, err := h.CommunityCore.CreateCommunity(community.Name, community.Location)
-	if err != nil {
+	switch {
+	case err == nil:
+		json.NewEncoder(w).Encode(&createdCommunity)
+	case errors.Is(err, core.ErrInvalidInputParams):
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	default:
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
-	json.NewEncoder(w).Encode(&createdCommunity)
 }
 
 // DeleteCommunity function to delete a single communtiy by ID

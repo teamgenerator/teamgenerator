@@ -1,6 +1,8 @@
 package core
 
 import (
+	"fmt"
+	"strings"
 	"time"
 
 	"github.com/teamgenerator/teamgenerator/server/pkg/models"
@@ -63,6 +65,20 @@ func (c *CommunityCore) GetCommunities() ([]Community, error) {
 
 // CreateCommunity creates a single communtiy given a name and location
 func (c *CommunityCore) CreateCommunity(name, location string) (*Community, error) {
+	var sb strings.Builder
+
+	if name == "" {
+		sb.WriteString("- name must be provided\n")
+	}
+	if location == "" {
+		sb.WriteString("- location must be provided\n")
+	}
+	if errMsg := sb.String(); errMsg != "" {
+		errMsg = fmt.Sprintf("Error validating query params: \n%s", errMsg)
+		err := fmt.Errorf("%w, %s", ErrInvalidInputParams, errMsg)
+		return nil, err
+	}
+
 	community, err := c.CommunityRepo.Create(name, location)
 	if err != nil {
 		return nil, err
