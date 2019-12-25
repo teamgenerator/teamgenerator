@@ -84,6 +84,16 @@ func main() {
 		RatingCore: ratingCore,
 	}
 
+	sessionPlayerRepo := database.SessionPlayerRepo{}
+	sessionPlayerCore := core.SessionPlayerCore{
+		SessionPlayerRepo: &sessionPlayerRepo,
+		CommunityRepo:     &communityRepo,
+		PlayerRepo:        &playerRepo,
+	}
+	sessionPlayerHandler := handler.SessionPlayerHandler{
+		SessionPlayerCore: sessionPlayerCore,
+	}
+
 	// Route for community-related endpoints
 	router.HandleFunc("/communities", communityHandler.GetCommunities).Methods("GET")
 	router.HandleFunc("/communities/{id}", communityHandler.GetCommunity).Methods("GET")
@@ -110,11 +120,10 @@ func main() {
 	router.HandleFunc("/sessions/{id}", sessionHandler.DeleteSession).Methods("DELETE")
 
 	// Route for sessionPlayer-related endpoints
-	router.HandleFunc("/session-players", models.GetSessionPlayers).Methods("GET")
-	router.HandleFunc("/session-players/{id}", models.GetSessionPlayer).Methods("GET")
-	router.HandleFunc("/session-players", models.CreateSessionPlayer).Methods("POST")
-	router.HandleFunc("/session-players/{id}", models.UpdateSessionPlayer).Methods("PATCH")
-	router.HandleFunc("/session-players/{id}", models.DeleteSessionPlayer).Methods("DELETE")
+	router.HandleFunc("/session-players", sessionPlayerHandler.GetSessionPlayers).Methods("GET")
+	router.HandleFunc("/session-players/{id}", sessionPlayerHandler.GetSessionPlayer).Methods("GET")
+	router.HandleFunc("/session-players", sessionPlayerHandler.CreateSessionPlayer).Methods("POST")
+	router.HandleFunc("/session-players/{id}", sessionPlayerHandler.DeleteSessionPlayer).Methods("DELETE")
 
 	// Route for rating-related endpoints
 	router.HandleFunc("/ratings", ratingHandler.GetRatings).Methods("GET")
