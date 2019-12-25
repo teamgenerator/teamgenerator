@@ -62,10 +62,11 @@ services:
       # PG_DATABASE: ${PG_DATABASE}
       # PG_USER: ${PG_USER}
       # PG_PASSWORD: ${PG_PASSWORD}
-      PG_DATABASE: api
-      PG_USER: postgres
-      PG_PASSWORD: password
-      PG_HOST: psql
-      PG_PORT: 5432
+      TG_PG_DATABASE: api
+      TG_PG_USER: postgres
+      TG_PG_PASSWORD: password
+      TG_PG_HOST: psql
+      TG_PG_PORT: 5432
+      TG_API_PORT: 3030
     networks:
       - teamgen-net

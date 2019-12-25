@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -18,12 +19,12 @@ import (
 var err error
 
 var (
-	pgUser     = "postgres"
-	pgPassword = "password"
-	pgDatabase = "postgres"
-	pgHost     = "localhost"
-	pgPort     = "5432"
-	port       = ":3030"
+	pgUser     = os.Getenv("TG_PG_USER")
+	pgPassword = os.Getenv("TG_PG_PASSWORD")
+	pgDatabase = os.Getenv("TG_PG_DATABASE")
+	pgHost     = os.Getenv("TG_PG_HOST")
+	pgPort     = os.Getenv("TG_PG_PORT")
+	port       = os.Getenv("TG_API_PORT")
 )
 
 func main() {
