@@ -31,7 +31,11 @@ type CommunityFilter struct {
 type CommunityRepo interface {
 	// GetCommunities is the datbase layer to obtain the first matching community
 	// This function should accept a CommunityFilter and returns the filtered results
-	GetCommunities(filter CommunityFilter) ([]models.Community, error)
+	Get(filter CommunityFilter) ([]models.Community, error)
+	// Creates a community given a name and location
+	Create(name, location string) (*models.Community, error)
+	// Deletes a community given ID
+	Delete(ID string) (*models.Community, error)
 }
 
 // GetCommunity returns a single community given an ID if exists
@@ -39,17 +43,17 @@ func (c *CommunityCore) GetCommunity(ID string) (*Community, error) {
 	communityFilter := CommunityFilter{
 		ID: []string{ID},
 	}
-	communities, err := c.CommunityRepo.GetCommunities(communityFilter)
+	communities, err := c.CommunityRepo.Get(communityFilter)
 	if err != nil {
 		return nil, err
 	}
 	parsedCommunities := castCommunities(communities)
-	return &parsedCommunities[0], nil
+	return &(parsedCommunities[0]), nil
 }
 
 // GetCommunities returns an array of communities without any filter
 func (c *CommunityCore) GetCommunities() ([]Community, error) {
-	communities, err := c.CommunityRepo.GetCommunities(CommunityFilter{})
+	communities, err := c.CommunityRepo.Get(CommunityFilter{})
 	if err != nil {
 		return nil, err
 	}
@@ -57,16 +61,36 @@ func (c *CommunityCore) GetCommunities() ([]Community, error) {
 	return parsedCommunities, nil
 }
 
+// CreateCommunity creates a single communtiy given a name and location
+func (c *CommunityCore) CreateCommunity(name, location string) (*Community, error) {
+	community, err := c.CommunityRepo.Create(name, location)
+	if err != nil {
+		return nil, err
+	}
+	parsedCommunities := castCommunities([]models.Community{*community})
+	return &(parsedCommunities[0]), nil
+}
+
+// DeleteCommunity deletes a community given an ID
+func (c *CommunityCore) DeleteCommunity(ID string) (*Community, error) {
+	community, err := c.CommunityRepo.Delete(ID)
+	if err != nil {
+		return nil, err
+	}
+	parsedCommunities := castCommunities([]models.Community{*community})
+	return &(parsedCommunities[0]), nil
+}
+
 func castCommunities(communities []models.Community) []Community {
 	var parsedCommunities []Community
 	for _, v := range communities {
 		newCommunity := Community{
-			ID: v.ID,
+			ID:        v.ID,
 			CreatedAt: v.CreatedAt,
 			UpdatedAt: v.UpdatedAt,
-			Name: v.Name,
-			Location: v.Location,
-			Type: "community",
+			Name:      v.Name,
+			Location:  v.Location,
+			Type:      "community",
 		}
 		parsedCommunities = append(parsedCommunities, newCommunity)
 	}

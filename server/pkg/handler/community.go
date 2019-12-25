@@ -41,34 +41,12 @@ func (h *CommunityHandler) GetCommunity(w http.ResponseWriter, r *http.Request) 
 func (h *CommunityHandler) CreateCommunity(w http.ResponseWriter, r *http.Request) {
 	var community models.Community
 	json.NewDecoder(r.Body).Decode(&community)
-	result := db.DB.Create(&community)
-	if result.Error != nil {
-		http.Error(w, result.Error.Error(), http.StatusBadRequest)
+	createdCommunity, err := h.CommunityCore.CreateCommunity(community.Name, community.Location)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(w).Encode(&community)
-}
-
-// UpdateCommunity function to update an existing community
-func (h *CommunityHandler) UpdateCommunity(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
-	var community models.Community
-
-	result := db.DB.First(&community, params["id"])
-	if result.Error != nil {
-		errMsg := fmt.Sprintf("Community with id %s is not found", params["id"])
-		http.Error(w, errMsg, http.StatusBadRequest)
-		return
-	}
-
-	json.NewDecoder(r.Body).Decode(&community)
-	result = db.DB.Save(&community)
-	if result.Error != nil {
-		http.Error(w, result.Error.Error(), http.StatusBadRequest)
-		return
-	}
-
-	json.NewEncoder(w).Encode(&community)
+	json.NewEncoder(w).Encode(&createdCommunity)
 }
 
 // DeleteCommunity function to delete a single communtiy by ID
