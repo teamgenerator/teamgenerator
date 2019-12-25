@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/gorilla/mux"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/teamgenerator/teamgenerator/server/conf"
 	"github.com/teamgenerator/teamgenerator/server/db"
 	"github.com/teamgenerator/teamgenerator/server/pkg/core"
 	"github.com/teamgenerator/teamgenerator/server/pkg/database"
@@ -16,15 +16,10 @@ import (
 	"github.com/teamgenerator/teamgenerator/server/seed"
 )
 
-var err error
-
 var (
-	pgUser     = os.Getenv("TG_PG_USER")
-	pgPassword = os.Getenv("TG_PG_PASSWORD")
-	pgDatabase = os.Getenv("TG_PG_DATABASE")
-	pgHost     = os.Getenv("TG_PG_HOST")
-	pgPort     = os.Getenv("TG_PG_PORT")
-	port       = fmt.Sprintf(":%s", os.Getenv("TG_API_PORT"))
+	err           error
+	config        conf.Conf
+	globalConfigs = conf.NewConf()
 )
 
 func main() {
@@ -35,7 +30,7 @@ func main() {
 	router := routerAPI.PathPrefix("/v1").Subrouter()
 
 	// Initiate connection to postgres database
-	db.Open(pgUser, pgPassword, pgDatabase, pgHost, pgPort)
+	db.Open(globalConfigs.PgUser, globalConfigs.PgPassword, globalConfigs.PgDatabase, globalConfigs.PgHost, globalConfigs.PgPort)
 	defer db.Close()
 
 	migrateModels()
@@ -132,8 +127,8 @@ func main() {
 	router.HandleFunc("/ratings", ratingHandler.CreateRating).Methods("POST")
 	router.HandleFunc("/ratings/{id}", ratingHandler.DeleteRating).Methods("DELETE")
 
-	fmt.Printf("Go Backend Service initialized at port %s\n", port)
-	log.Fatal(http.ListenAndServe(port, router))
+	fmt.Printf("Go Backend Service initialized at port %s\n", globalConfigs.ApiPort)
+	log.Fatal(http.ListenAndServe(globalConfigs.ApiPort, router))
 }
 
 // Migrate the models
