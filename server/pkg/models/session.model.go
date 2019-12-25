@@ -6,7 +6,7 @@ import (
 
 // The Session object
 type Session struct {
-	ID          uint `gorm:"primary_key"`
+	ID          int `gorm:"primary_key"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	IsActive    bool `json:"IsActive"`

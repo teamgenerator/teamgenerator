@@ -75,6 +75,15 @@ func main() {
 		UserCore: userCore,
 	}
 
+	ratingRepo := database.RatingRepo{}
+	ratingCore := core.RatingCore{
+		RatingRepo: &ratingRepo,
+		PlayerRepo: &playerRepo,
+	}
+	ratingHandler := handler.RatingHandler{
+		RatingCore: ratingCore,
+	}
+
 	// Route for community-related endpoints
 	router.HandleFunc("/communities", communityHandler.GetCommunities).Methods("GET")
 	router.HandleFunc("/communities/{id}", communityHandler.GetCommunity).Methods("GET")
@@ -108,11 +117,10 @@ func main() {
 	router.HandleFunc("/session-players/{id}", models.DeleteSessionPlayer).Methods("DELETE")
 
 	// Route for rating-related endpoints
-	router.HandleFunc("/ratings", models.GetRatings).Methods("GET")
-	router.HandleFunc("/ratings/{id}", models.GetRating).Methods("GET")
-	router.HandleFunc("/ratings", models.CreateRating).Methods("POST")
-	router.HandleFunc("/ratings/{id}", models.UpdateRating).Methods("PATCH")
-	router.HandleFunc("/ratings/{id}", models.DeleteRating).Methods("DELETE")
+	router.HandleFunc("/ratings", ratingHandler.GetRatings).Methods("GET")
+	router.HandleFunc("/ratings/{id}", ratingHandler.GetRating).Methods("GET")
+	router.HandleFunc("/ratings", ratingHandler.CreateRating).Methods("POST")
+	router.HandleFunc("/ratings/{id}", ratingHandler.DeleteRating).Methods("DELETE")
 
 	fmt.Printf("Go Backend Service initialized at port %s\n", port)
 	log.Fatal(http.ListenAndServe(port, router))

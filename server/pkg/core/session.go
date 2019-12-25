@@ -11,7 +11,7 @@ import (
 
 // Session is the internal representation of the Session object
 type Session struct {
-	ID          uint
+	ID          int
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	IsActive    bool

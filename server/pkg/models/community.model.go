@@ -6,7 +6,7 @@ import (
 
 // Community object
 type Community struct {
-	ID        uint `gorm:"primary_key"`
+	ID        int `gorm:"primary_key"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	Name      string `gorm:"type:varchar(100);unique"`
