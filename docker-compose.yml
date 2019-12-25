@@ -62,7 +62,7 @@ services:
       # PG_DATABASE: ${PG_DATABASE}
       # PG_USER: ${PG_USER}
       # PG_PASSWORD: ${PG_PASSWORD}
-      TG_PG_DATABASE: api
+      TG_PG_DATABASE: postgres
       TG_PG_USER: postgres
       TG_PG_PASSWORD: password
       TG_PG_HOST: psql
