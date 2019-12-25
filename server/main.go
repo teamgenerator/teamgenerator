@@ -8,10 +8,7 @@ import (
 	"github.com/gorilla/mux"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/teamgenerator/teamgenerator/server/db"
-	"github.com/teamgenerator/teamgenerator/server/pkg/models"
-	"github.com/teamgenerator/teamgenerator/server/pkg/handler"
-	"github.com/teamgenerator/teamgenerator/server/pkg/core"
-	"github.com/teamgenerator/teamgenerator/server/pkg/database"
+	"github.com/teamgenerator/teamgenerator/server/models"
 	"github.com/teamgenerator/teamgenerator/server/seed"
 )
 
@@ -40,21 +37,12 @@ func main() {
 	migrateModels()
 	addRelations()
 	seed.Seed()
-
-	communityRepo := database.CommunityRepo{}
-	communityCore := core.CommunityCore{
-		CommunityRepo: communityRepo,
-	}
-	communityHandler := handler.CommunityHandler{
-		CommunityCore: communityCore,
-	}
-
 	// Route for community-related endpoints
-	router.HandleFunc("/communities", communityHandler.GetCommunities).Methods("GET")
-	router.HandleFunc("/communities/{id}", communityHandler.GetCommunity).Methods("GET")
-	router.HandleFunc("/communities", communityHandler.CreateCommunity).Methods("POST")
-	router.HandleFunc("/communities/{id}", communityHandler.UpdateCommunity).Methods("PATCH")
-	router.HandleFunc("/communities/{id}", communityHandler.DeleteCommunity).Methods("DELETE")
+	router.HandleFunc("/communities", models.GetCommunities).Methods("GET")
+	router.HandleFunc("/communities/{id}", models.GetCommunity).Methods("GET")
+	router.HandleFunc("/communities", models.CreateCommunity).Methods("POST")
+	router.HandleFunc("/communities/{id}", models.UpdateCommunity).Methods("PATCH")
+	router.HandleFunc("/communities/{id}", models.DeleteCommunity).Methods("DELETE")
 
 	// Route for player-related endpoints
 	router.HandleFunc("/players", models.GetPlayers).Methods("GET")

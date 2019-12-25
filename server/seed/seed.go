@@ -5,7 +5,7 @@ import (
 
 	"github.com/teamgenerator/teamgenerator/server/db"
 
-	"github.com/teamgenerator/teamgenerator/server/pkg/models"
+	"github.com/teamgenerator/teamgenerator/server/models"
 )
 
 // Seed is to seed data to the database on startup
