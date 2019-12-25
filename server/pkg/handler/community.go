@@ -2,11 +2,9 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/teamgenerator/teamgenerator/server/db"
 	"github.com/teamgenerator/teamgenerator/server/pkg/core"
 	"github.com/teamgenerator/teamgenerator/server/pkg/models"
 )
@@ -52,20 +50,10 @@ func (h *CommunityHandler) CreateCommunity(w http.ResponseWriter, r *http.Reques
 // DeleteCommunity function to delete a single communtiy by ID
 func (h *CommunityHandler) DeleteCommunity(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	var community models.Community
-	result := db.DB.First(&community, params["id"])
-	if result.Error != nil {
-		errMsg := fmt.Sprintf("Community with id %s is not found", params["id"])
-		http.Error(w, errMsg, http.StatusBadRequest)
+	createdCommunity, err := h.CommunityCore.DeleteCommunity(params["id"])
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
-	if community.ID != 0 {
-		result = db.DB.Delete(&community)
-		if result.Error != nil {
-			http.Error(w, result.Error.Error(), http.StatusBadRequest)
-			return
-		}
-	}
-	json.NewEncoder(w).Encode(&community)
+	json.NewEncoder(w).Encode(&createdCommunity)
 }
