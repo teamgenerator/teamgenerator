@@ -24,7 +24,7 @@ var (
 	pgDatabase = os.Getenv("TG_PG_DATABASE")
 	pgHost     = os.Getenv("TG_PG_HOST")
 	pgPort     = os.Getenv("TG_PG_PORT")
-	port       = os.Getenv("TG_API_PORT")
+	port       = fmt.Sprintf(":%s", os.Getenv("TG_API_PORT"))
 )
 
 func main() {
