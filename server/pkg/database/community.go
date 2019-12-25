@@ -13,8 +13,8 @@ var (
 // CommunityRepo is the database layer for interacting with the Community table
 type CommunityRepo struct{}
 
-// GetCommunities returns the communities with respect to the given filter
-func (r *CommunityRepo) GetCommunities(filter core.CommunityFilter) ([]models.Community, error) {
+// Get returns the communities with respect to the given filter
+func (r *CommunityRepo) Get(filter core.CommunityFilter) ([]models.Community, error) {
 	var communities []models.Community
 
 	if len(filter.ID) == 1 {
@@ -27,4 +27,35 @@ func (r *CommunityRepo) GetCommunities(filter core.CommunityFilter) ([]models.Co
 
 	db.DB.Find(&communities)
 	return communities, nil
+}
+
+// Create function to create a single community
+func (r *CommunityRepo) Create(name, location string) (*models.Community, error) {
+	community := models.Community{
+		Name:     name,
+		Location: location,
+	}
+	var createdCommunity models.Community
+	result := db.DB.Create(&community).Scan(&createdCommunity)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &createdCommunity, nil
+}
+
+// Deletes a single community given an ID
+func (r *CommunityRepo) Delete(ID string) (*models.Community, error) {
+	var community models.Community
+	result := db.DB.First(&community, ID)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	if community.ID != 0 {
+		result = db.DB.Delete(&community)
+		if result.Error != nil {
+			return nil, result.Error
+		}
+	}
+	return &community, nil
 }
