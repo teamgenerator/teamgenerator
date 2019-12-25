@@ -29,11 +29,12 @@ type CommunityFilter struct {
 
 // CommunityRepo is the interface that the community database should implement
 type CommunityRepo interface {
-	// GetCommunity is the datbase layer to obtain the first matching community
+	// GetCommunities is the datbase layer to obtain the first matching community
+	// This function should accept a CommunityFilter and returns the filtered results
 	GetCommunities(filter CommunityFilter) ([]models.Community, error)
 }
 
-// GetCommunity is the Core logic to manipulate Community-related objects
+// GetCommunity returns a single community given an ID if exists
 func (c *CommunityCore) GetCommunity(ID string) (*Community, error) {
 	communityFilter := CommunityFilter{
 		ID: []string{ID},
@@ -44,6 +45,16 @@ func (c *CommunityCore) GetCommunity(ID string) (*Community, error) {
 	}
 	parsedCommunities := castCommunities(communities)
 	return &parsedCommunities[0], nil
+}
+
+// GetCommunities returns an array of communities without any filter
+func (c *CommunityCore) GetCommunities() ([]Community, error) {
+	communities, err := c.CommunityRepo.GetCommunities(CommunityFilter{})
+	if err != nil {
+		return nil, err
+	}
+	parsedCommunities := castCommunities(communities)
+	return parsedCommunities, nil
 }
 
 func castCommunities(communities []models.Community) []Community {

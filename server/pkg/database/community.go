@@ -1,7 +1,6 @@
 package database
 
 import (
-	"fmt"
 	"github.com/teamgenerator/teamgenerator/server/db"
 	"github.com/teamgenerator/teamgenerator/server/pkg/core"
 	"github.com/teamgenerator/teamgenerator/server/pkg/models"
@@ -14,6 +13,7 @@ var (
 // CommunityRepo is the database layer for interacting with the Community table
 type CommunityRepo struct{}
 
+// GetCommunities returns the communities with respect to the given filter
 func (r *CommunityRepo) GetCommunities(filter core.CommunityFilter) ([]models.Community, error) {
 	var communities []models.Community
 
