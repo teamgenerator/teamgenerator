@@ -128,7 +128,7 @@ func main() {
 	router.HandleFunc("/ratings/{id}", ratingHandler.DeleteRating).Methods("DELETE")
 
 	fmt.Printf("Go Backend Service initialized at port %s\n", globalConfigs.ApiPort)
-	log.Fatal(http.ListenAndServe(globalConfigs.ApiPort, router))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", globalConfigs.ApiPort), router))
 }
 
 // Migrate the models

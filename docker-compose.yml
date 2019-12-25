@@ -1,9 +1,9 @@
 ##
 # Author: Nico Alimin (nicoalimin@gmail.com)
 # Date: Wednesday, 1st August 2018 11:52:46 pm
-# 
+#
 # DESCRIPTION
-# 
+#
 # Copyright (c) 2018 Nico Alimin
 ##
 
@@ -16,7 +16,6 @@ volumes:
   teamgen-psql-volume:
 
 services:
-
   # Cold Storage
   psql:
     restart: always
@@ -40,7 +39,7 @@ services:
       # OLD ONE
       # - teamgen-psql-volume:/var/lib/posgresql/data
       - $HOME/Code/volumes/postgres:/var/lib/postgresql/data
-  
+
   # Database visualization
   adminer:
     image: adminer
@@ -62,11 +61,11 @@ services:
       # PG_DATABASE: ${PG_DATABASE}
       # PG_USER: ${PG_USER}
       # PG_PASSWORD: ${PG_PASSWORD}
-      TG_PG_DATABASE: postgres
-      TG_PG_USER: postgres
-      TG_PG_PASSWORD: password
-      TG_PG_HOST: psql
-      TG_PG_PORT: 5432
-      TG_API_PORT: 3030
+      - TG_PG_DATABASE=postgres
+      - TG_PG_USER=postgres
+      - TG_PG_PASSWORD=password
+      - TG_PG_HOST=psql
+      - TG_PG_PORT=5432
+      - TG_API_PORT=3030
     networks:
       - teamgen-net
