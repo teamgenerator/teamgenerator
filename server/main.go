@@ -58,6 +58,15 @@ func main() {
 		PlayerCore: playerCore,
 	}
 
+	sessionRepo := database.SessionRepo{}
+	sessionCore := core.SessionCore{
+		SessionRepo:   &sessionRepo,
+		CommunityRepo: &communityRepo,
+	}
+	sessionHandler := handler.SessionHandler{
+		SessionCore: sessionCore,
+	}
+
 	// Route for community-related endpoints
 	router.HandleFunc("/communities", communityHandler.GetCommunities).Methods("GET")
 	router.HandleFunc("/communities/{id}", communityHandler.GetCommunity).Methods("GET")
@@ -78,11 +87,11 @@ func main() {
 	router.HandleFunc("/users/{id}", models.DeleteUser).Methods("DELETE")
 
 	// Route for session-related endpoints
-	router.HandleFunc("/sessions", models.GetSessions).Methods("GET")
-	router.HandleFunc("/sessions/{id}", models.GetSession).Methods("GET")
-	router.HandleFunc("/sessions", models.CreateSession).Methods("POST")
-	router.HandleFunc("/sessions/{id}", models.UpdateSession).Methods("PATCH")
-	router.HandleFunc("/sessions/{id}", models.DeleteSession).Methods("DELETE")
+	router.HandleFunc("/sessions", sessionHandler.GetSessions).Methods("GET")
+	router.HandleFunc("/sessions/{id}", sessionHandler.GetSession).Methods("GET")
+	router.HandleFunc("/sessions", sessionHandler.CreateSession).Methods("POST")
+	router.HandleFunc("/sessions/{id}", sessionHandler.UpdateSession).Methods("PATCH")
+	router.HandleFunc("/sessions/{id}", sessionHandler.DeleteSession).Methods("DELETE")
 
 	// Route for sessionPlayer-related endpoints
 	router.HandleFunc("/session-players", models.GetSessionPlayers).Methods("GET")

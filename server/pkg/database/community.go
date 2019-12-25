@@ -22,6 +22,9 @@ func (r *CommunityRepo) Get(filter core.CommunityFilter) ([]models.Community, er
 		if result.Error != nil {
 			return nil, result.Error
 		}
+		if len(communities) < 1 {
+			return nil, nil
+		}
 		return communities, nil
 	}
 
