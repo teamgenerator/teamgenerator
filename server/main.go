@@ -43,7 +43,7 @@ func main() {
 
 	communityRepo := database.CommunityRepo{}
 	communityCore := core.CommunityCore{
-		CommunityRepo: communityRepo,
+		CommunityRepo: &communityRepo,
 	}
 	communityHandler := handler.CommunityHandler{
 		CommunityCore: communityCore,
