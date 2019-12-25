@@ -43,7 +43,7 @@ func (r *CommunityRepo) Create(name, location string) (*models.Community, error)
 	return &createdCommunity, nil
 }
 
-// Deletes a single community given an ID
+// Delete a single community given an ID
 func (r *CommunityRepo) Delete(ID string) (*models.Community, error) {
 	var community models.Community
 	result := db.DB.First(&community, ID)
