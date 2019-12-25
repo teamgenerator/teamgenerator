@@ -7,7 +7,9 @@ import (
 )
 
 // DB is the database we want to export
-var DB *gorm.DB
+var (
+	DB *gorm.DB
+)
 
 // Open opens the database connection
 func Open(pgUser string, pgPassword string, pgDatabase string, pgHost string, pgPort string) {
