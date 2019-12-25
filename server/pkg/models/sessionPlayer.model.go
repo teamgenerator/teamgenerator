@@ -12,7 +12,7 @@ import (
 
 // The SessionPlayer object
 type SessionPlayer struct {
-	ID          uint `gorm:"primary_key"`
+	ID          int `gorm:"primary_key"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	PlayerID    int `json:"PlayerID"`

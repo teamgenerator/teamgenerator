@@ -10,7 +10,7 @@ import (
 
 // Community is the internal representation of the Community object
 type Community struct {
-	ID        uint
+	ID        int
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	Name      string

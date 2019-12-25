@@ -11,7 +11,7 @@ import (
 
 // Player is the internal representation of the Player object
 type Player struct {
-	ID          uint
+	ID          int
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	Name        string
