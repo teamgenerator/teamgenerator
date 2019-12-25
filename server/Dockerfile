@@ -7,27 +7,10 @@
 # Copyright (c) 2018 Nico Alimin
 ##
 
-FROM iron/go:dev
+FROM golang:1.14-rc-alpine3.10
 
 # Environment Variables
 ENV SRC_DIR=/go/src/github.com/teamgenerator/teamgenerator/server
-
-# Install the dependency manager
-
-RUN curl -s https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-
-# Install tools for analysis
-# RUN go get -u mvdan.cc/interfacer
-# RUN go get github.com/GoASTScanner/gas/cmd/gas/...
-# RUN go get github.com/jgautheron/goconst/cmd/goconst
-# RUN go get github.com/jgautheron/gogetimports
-# RUN go get github.com/jgautheron/usedexports
-# RUN go get github.com/walle/lll/...
-# RUN go get github.com/mdempsky/maligned
-# RUN go get -u github.com/alexkohler/prealloc
-# RUN go get github.com/gordonklaus/ineffassign
-# RUN go get github.com/fzipp/gocyclo
-# RUN go get -u github.com/tsenart/deadcode
 
 # Metainformation
 LABEL Author="Nico Alimin <nicoalimin@gmail.com>"
@@ -39,7 +22,7 @@ ADD . $SRC_DIR
 WORKDIR $SRC_DIR
 
 # Install dependencies
-RUN dep ensure
+RUN go get
 
 # Install the binary
 RUN go install
