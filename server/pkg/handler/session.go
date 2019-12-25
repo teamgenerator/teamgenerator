@@ -21,7 +21,7 @@ func (h *SessionHandler) GetSessions(w http.ResponseWriter, r *http.Request) {
 	switch {
 	case err == nil:
 		json.NewEncoder(w).Encode(&sessions)
-	case errors.Is(err, core.ErrSessionsNotFound):
+	case errors.Is(err, core.ErrSessionNotFound):
 		http.Error(w, err.Error(), http.StatusNotFound)
 	default:
 		http.Error(w, err.Error(), http.StatusInternalServerError)

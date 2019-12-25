@@ -54,7 +54,7 @@ func (c *SessionCore) GetSession(ID string) (*Session, error) {
 		return nil, err
 	}
 	if sessions == nil {
-		return nil, ErrSessionsNotFound
+		return nil, ErrSessionNotFound
 	}
 	parsedCommunities := castSessions(sessions)
 	return &(parsedCommunities[0]), nil

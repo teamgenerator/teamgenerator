@@ -29,11 +29,14 @@ func (h *CommunityHandler) GetCommunities(w http.ResponseWriter, r *http.Request
 func (h *CommunityHandler) GetCommunity(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	community, err := h.CommunityCore.GetCommunity(params["id"])
-	if err != nil {
+	switch {
+	case err == nil:
+		json.NewEncoder(w).Encode(&community)
+	case errors.Is(err, core.ErrCommunityNotFound):
+		http.Error(w, err.Error(), http.StatusNotFound)
+	default:
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
-	json.NewEncoder(w).Encode(&community)
 }
 
 // CreateCommunity function to create a single community

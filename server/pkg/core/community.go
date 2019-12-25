@@ -49,6 +49,9 @@ func (c *CommunityCore) GetCommunity(ID string) (*Community, error) {
 	if err != nil {
 		return nil, err
 	}
+	if communities == nil {
+		return nil, ErrCommunityNotFound
+	}
 	parsedCommunities := castCommunities(communities)
 	return &(parsedCommunities[0]), nil
 }
