@@ -3,13 +3,7 @@ package core
 import (
 	"time"
 
-	"github.com/teamgenerator/teamgenerator/server/pkg/database"
-
 	"github.com/teamgenerator/teamgenerator/server/pkg/models"
-)
-
-var (
-	_ CommunityRepo = (*database.CommunityRepo)(nil)
 )
 
 // Community is the internal representation of the Community object
@@ -24,31 +18,46 @@ type Community struct {
 
 // CommunityCore is the core logic of the community repo
 type CommunityCore struct {
-	CommunityRepo database.CommunityRepo
+	CommunityRepo CommunityRepo
+}
+
+// CommunityFilter is the filter that the GetCommunities DAL use to filter its results
+type CommunityFilter struct {
+	// ID is used to obtain a single community by ID
+	ID []string
 }
 
 // CommunityRepo is the interface that the community database should implement
 type CommunityRepo interface {
 	// GetCommunity is the datbase layer to obtain the first matching community
-	GetCommunity(ID string) (*models.Community, error)
+	GetCommunities(filter CommunityFilter) ([]models.Community, error)
 }
 
 // GetCommunity is the Core logic to manipulate Community-related objects
 func (c *CommunityCore) GetCommunity(ID string) (*Community, error) {
-	communities, err := c.CommunityRepo.GetCommunity(ID)
+	communityFilter := CommunityFilter{
+		ID: []string{ID},
+	}
+	communities, err := c.CommunityRepo.GetCommunities(communityFilter)
 	if err != nil {
 		return nil, err
 	}
-	return castCommunity(*communities), nil
+	parsedCommunities := castCommunities(communities)
+	return &parsedCommunities[0], nil
 }
 
-func castCommunity(communityModel models.Community) *Community {
-	return &Community{
-		ID: communityModel.ID,
-		CreatedAt: communityModel.CreatedAt,
-		UpdatedAt: communityModel.UpdatedAt,
-		Name: communityModel.Name,
-		Location: communityModel.Location,
-		Type: "community",
+func castCommunities(communities []models.Community) []Community {
+	var parsedCommunities []Community
+	for _, v := range communities {
+		newCommunity := Community{
+			ID: v.ID,
+			CreatedAt: v.CreatedAt,
+			UpdatedAt: v.UpdatedAt,
+			Name: v.Name,
+			Location: v.Location,
+			Type: "community",
+		}
+		parsedCommunities = append(parsedCommunities, newCommunity)
 	}
+	return parsedCommunities
 }
