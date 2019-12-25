@@ -31,6 +31,9 @@ RUN go install
 RUN cd $SRC_DIR; go build -o myapp
 
 # Export ports
-EXPOSE 8080
+EXPOSE 3030
 
-ENTRYPOINT ["./myapp"]
+# Build the binary
+RUN go build .
+
+ENTRYPOINT [ "./server" ]

@@ -19,9 +19,9 @@ type Conf struct {
 	PgUser     string `envconfig:"TG_PG_USER" default:"postgres"`
 	PgPassword string `envconfig:"TG_PG_PASSWORD" default:"password"`
 	PgDatabase string `envconfig:"TG_PG_DATABASE" default:"postgres"`
-	PgHost     string `envconfig:"TG_PG_HOST" default:"psql"`
+	PgHost     string `envconfig:"TG_PG_HOST" default:"localhost"`
 	PgPort     string `envconfig:"TG_PG_PORT" default:"5432"`
-	ApiPort    string `envconfig"TG_API_PORT" default:"3030"`
+	ApiPort    string `envconfig:"TG_API_PORT" default:"3030"`
 }
 
 func NewConf() Conf {
