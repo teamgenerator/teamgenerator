@@ -118,7 +118,7 @@ class CustomAppBar extends Component {
               }
 
               <Typography className={classes.title} variant="subheading" color="inherit">
-                {this.props.title.toUpperCase()}
+                {this.props.title && this.props.title.toUpperCase()}
               </Typography>
 
               {this.props.rightButton ?

@@ -9,6 +9,7 @@ import PlayerDetails from "./containers/PlayerDetails";
 import GenerateScreen from "./containers/GenerateScreen";
 import SessionDetails from "./containers/SessionDetails";
 import SessionIndex from "./containers/SessionIndex";
+import Loading from './containers/Loading';
 
 class App extends Component {
   constructor(props) {
@@ -20,17 +21,19 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/" component={HomeScreen} />
-            // Router for players
-            <Route exact path="/players" component={PlayersScreen} />
-            <Route path="/players/:id" component={PlayerDetails} />
-            <Route exact path="/generate" component={GenerateScreen} />
-            <Route exact path="/sessions" component={SessionIndex} />
-            <Route path="/sessions/:id" component={SessionDetails} />
-          </Switch>
-        </BrowserRouter>
+        <Loading>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path="/" component={HomeScreen} />
+              // Router for players
+              <Route exact path="/players" component={PlayersScreen} />
+              <Route path="/players/:id" component={PlayerDetails} />
+              <Route exact path="/generate" component={GenerateScreen} />
+              <Route exact path="/sessions" component={SessionIndex} />
+              <Route path="/sessions/:id" component={SessionDetails} />
+            </Switch>
+          </BrowserRouter>
+        </Loading>
       </Provider>
     );
   }

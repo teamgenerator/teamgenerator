@@ -15,6 +15,8 @@ import Save from "@material-ui/icons/Save";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import { diff } from "deep-object-diff";
 import moment from "moment";
+import makeRequestApiActionThread from "../actions/apiRequest";
+import Loading from "./Loading";
 
 const styles = {
   container: {
@@ -34,6 +36,9 @@ class SessionIndex extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+
+    this.props.dispatch(makeRequestApiActionThread("GET", "/sessions", undefined, "REPLACE", "sessions"));
+    this.props.dispatch(makeRequestApiActionThread("GET", "/communities", undefined, "REPLACE", "communities"));
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -89,7 +94,7 @@ class SessionIndex extends Component {
             <Typography variant="title">
               {"Community: "}
               <span className={classes.fontBlue}>
-                {this.props.activeCommunity.Name}
+                {this.props.activeCommunity ? this.props.activeCommunity.name : null}
               </span>
             </Typography>
           </Grid>
@@ -108,10 +113,11 @@ class SessionIndex extends Component {
 const mapStateToProps = state => ({
   sessions: state.sessions,
   sessionsArray: Object.values(state.sessions),
-  activeCommunity: state.communities[state.ui.activeCommunity]
+  activeCommunity: state.communities[state.ui.activeCommunity],
+  ui: state.ui,
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({ dispatch });
 
 export default connect(
   mapStateToProps,
