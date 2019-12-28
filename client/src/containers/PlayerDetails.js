@@ -8,6 +8,7 @@ import { diff } from 'deep-object-diff';
 import StarRatings from '../components/StarRatings';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
+import makeRequestApiActionThread from '../actions/apiRequest';
 
 const styles = {
   container: {
@@ -40,7 +41,13 @@ class PlayerDetails extends Component {
     this.setUpdatedAttributes = this.setUpdatedAttributes.bind(this);
   }
 
+  componentDidMount() {
+    this.props.dispatch(makeRequestApiActionThread("GET", "/players", undefined, "REPLACE", "player"));
+  }
+
   componentDidUpdate(prevProps, prevState) {
+    const playerDiffBetweenProps
+
     const playerDiffBetweenPrevStateAndCurrState = diff(prevState.updatedAttributes, this.state.updatedAttributes);
     if (Object.keys(playerDiffBetweenPrevStateAndCurrState).length > 0) {
       const playerDiff = diff(this.props.player, this.state.updatedAttributes);
@@ -72,6 +79,7 @@ class PlayerDetails extends Component {
   render() {
     const { classes } = this.props;
     const title = this.props.match.params.id !== 'new' ? this.props.player.name : 'New Player';
+    console.warn(title);
     return (
       <div className={classes.container}>
         <AppBar title={title} rightButton={{
@@ -115,11 +123,12 @@ class PlayerDetails extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  player: Object.values(state.players).find(player => player.id === ownProps.match.params.id) || {},
+  players: state.players,
+  player: Object.values(state.players).find(player => !Number.isNaN(ownProps.match.params.id) && player.id === Number(ownProps.match.params.id)) || {},
 });
 
 const mapDispatchToProps = dispatch => ({
-  
+  dispatch,
 });
 
 

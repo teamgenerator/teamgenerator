@@ -50,5 +50,4 @@ const preloadedState = {
 
 export default configureStore({ 
   reducer: rootReducer,
-  preloadedState,
 });

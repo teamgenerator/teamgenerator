@@ -2,9 +2,7 @@ import {
   camelCase
 } from 'change-case';
 
-const plurals = {
-  player: "players",
-}
+import pluralize from 'pluralize';
 
 const makeRequestApiActionThread = (
   method,
@@ -116,7 +114,7 @@ const makeRequestApiActionThread = (
 
 
         dispatch({
-          type: `${plurals[typeExpected].toUpperCase()}_${actionType.toUpperCase()}`,
+          type: `${pluralize(typeExpected).toUpperCase()}_${actionType.toUpperCase()}`,
           data: entityMap,
         });
       }

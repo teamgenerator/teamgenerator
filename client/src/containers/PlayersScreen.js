@@ -5,6 +5,7 @@ import AppBar from '../components/AppBar';
 import StarRatings from '../components/StarRatings';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import { connect } from 'react-redux';
+import makeRequestApiActionThread from '../actions/apiRequest';
 
 const styles = {
   container: {
@@ -21,6 +22,10 @@ class PlayersScreen extends Component {
 
     this.renderPlayerListItem = this.renderPlayerListItem.bind(this);
     this.handleClickPlayerList = this.handleClickPlayerList.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.dispatch(makeRequestApiActionThread("GET", "/players", undefined, "REPLACE", "players"));
   }
 
   handleClickPlayerList(playerKey) {
@@ -56,7 +61,7 @@ class PlayersScreen extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-
+  dispatch,
 });
 
 const mapStateToProps = state => ({
