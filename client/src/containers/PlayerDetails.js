@@ -46,8 +46,6 @@ class PlayerDetails extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const playerDiffBetweenProps
-
     const playerDiffBetweenPrevStateAndCurrState = diff(prevState.updatedAttributes, this.state.updatedAttributes);
     if (Object.keys(playerDiffBetweenPrevStateAndCurrState).length > 0) {
       const playerDiff = diff(this.props.player, this.state.updatedAttributes);
