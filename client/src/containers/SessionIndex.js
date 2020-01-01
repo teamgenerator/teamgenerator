@@ -16,7 +16,6 @@ import ChevronRight from "@material-ui/icons/ChevronRight";
 import { diff } from "deep-object-diff";
 import moment from "moment";
 import makeRequestApiActionThread from "../actions/apiRequest";
-import Loading from "./Loading";
 
 const styles = {
   container: {
@@ -37,8 +36,24 @@ class SessionIndex extends Component {
     super(props);
     this.state = {};
 
-    this.props.dispatch(makeRequestApiActionThread("GET", "/sessions", undefined, "REPLACE", "sessions"));
-    this.props.dispatch(makeRequestApiActionThread("GET", "/communities", undefined, "REPLACE", "communities"));
+    this.props.dispatch(
+      makeRequestApiActionThread(
+        "GET",
+        "/sessions",
+        undefined,
+        "REPLACE",
+        "sessions"
+      )
+    );
+    this.props.dispatch(
+      makeRequestApiActionThread(
+        "GET",
+        "/communities",
+        undefined,
+        "REPLACE",
+        "communities"
+      )
+    );
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -65,7 +80,10 @@ class SessionIndex extends Component {
     const parsedSessionDate = moment(sessionDate).format("MMMM Do YYYY");
     return (
       <React.Fragment key={sessionKey}>
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => this.props.history.push("/sessions/" + sessionKey)}
+        >
           <ListItemText primary={parsedSessionDate} />
           <ListItemText secondary={`Players: ${sessionNumPlayers}`} />
           <ListItemSecondaryAction>
@@ -94,7 +112,9 @@ class SessionIndex extends Component {
             <Typography variant="title">
               {"Community: "}
               <span className={classes.fontBlue}>
-                {this.props.activeCommunity ? this.props.activeCommunity.name : null}
+                {this.props.activeCommunity
+                  ? this.props.activeCommunity.name
+                  : null}
               </span>
             </Typography>
           </Grid>
@@ -102,7 +122,7 @@ class SessionIndex extends Component {
         <List>
           {/* TODO: Use actual number of players once session players store is implemented */}
           {this.props.sessionsArray.map(session =>
-            this.renderSessionListItem(session.ID, session.CreatedAt, 1)
+            this.renderSessionListItem(session.id, session.createdAt, 1)
           )}
         </List>
       </div>
@@ -114,7 +134,7 @@ const mapStateToProps = state => ({
   sessions: state.sessions,
   sessionsArray: Object.values(state.sessions),
   activeCommunity: state.communities[state.ui.activeCommunity],
-  ui: state.ui,
+  ui: state.ui
 });
 
 const mapDispatchToProps = dispatch => ({ dispatch });
