@@ -80,7 +80,10 @@ class SessionIndex extends Component {
     const parsedSessionDate = moment(sessionDate).format("MMMM Do YYYY");
     return (
       <React.Fragment key={sessionKey}>
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => this.props.history.push("/sessions/" + sessionKey)}
+        >
           <ListItemText primary={parsedSessionDate} />
           <ListItemText secondary={`Players: ${sessionNumPlayers}`} />
           <ListItemSecondaryAction>
@@ -119,7 +122,7 @@ class SessionIndex extends Component {
         <List>
           {/* TODO: Use actual number of players once session players store is implemented */}
           {this.props.sessionsArray.map(session =>
-            this.renderSessionListItem(session.ID, session.CreatedAt, 1)
+            this.renderSessionListItem(session.id, session.createdAt, 1)
           )}
         </List>
       </div>
