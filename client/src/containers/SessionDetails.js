@@ -1,15 +1,9 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Grid,
-  TextField,
-  IconButton,
-  Icon,
-  Typography
-} from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "../components/AppBar";
 import { connect } from "react-redux";
+import moment from "moment";
 import makeRequestApiActionThread from "../actions/apiRequest";
 
 const styles = {
@@ -21,7 +15,12 @@ const styles = {
     left: "50%",
     transform: "translateX(-50%)"
   },
-  ratingsGridItem: {}
+  pl2: {
+    "padding-left": "20px !important"
+  },
+  pb2: {
+    "padding-bottom": "20px !important"
+  }
 };
 
 class SessionDetails extends Component {
@@ -59,8 +58,8 @@ class SessionDetails extends Component {
     });
   }
   render() {
-    const { classes, match } = this.props;
-    if (!this.props.session) {
+    const { classes, match, session } = this.props;
+    if (!session) {
       return <div />;
     }
     console.log(this.props.session);
@@ -68,12 +67,18 @@ class SessionDetails extends Component {
       <div className={classes.container}>
         <AppBar title={"Sessions"} />
         <Grid container spacing={24} alignItems="center">
-          <Grid item xs={12}>
-            <Typography variant="display1">{`Session #${match.params.id}`}</Typography>
+          <Grid item xs={12} className={classes.pl2}>
+            <Typography
+              variant="title"
+              className={classes.pb2}
+            >{`Session #${match.params.id}`}</Typography>
             <Typography variant="subheading">
-              Rate player's performance for this game. Your ratings will help us
-              get some insight of the players performance trend and adjust the
-              ratings overtime.
+              {`Created at: ${moment(session.createdAt).format(
+                "MMMM Do YYYY"
+              )}`}
+            </Typography>
+            <Typography variant="subheading">
+              {`Is active: ${session.isActive}`}
             </Typography>
           </Grid>
         </Grid>
