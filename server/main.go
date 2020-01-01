@@ -144,5 +144,6 @@ func addRelations() {
 	db.DB.Model(&models.SessionPlayer{}).AddForeignKey("community_id", "communities(id)", "CASCADE", "CASCADE")
 	db.DB.Model(&models.SessionPlayer{}).AddForeignKey("player_id", "players(id)", "CASCADE", "CASCADE")
 	db.DB.Model(&models.Rating{}).AddForeignKey("player_id", "players(id)", "CASCADE", "CASCADE")
+	db.DB.Model(&models.Rating{}).AddForeignKey("session_id", "sessions(id)", "CASCADE", "CASCADE")
 	fmt.Printf("Successfully added foreign keys\n")
 }
