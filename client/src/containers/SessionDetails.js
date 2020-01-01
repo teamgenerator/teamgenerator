@@ -1,84 +1,80 @@
-import React, { Component } from 'react';
-import { Button, Grid, TextField, IconButton, Icon, Typography } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '../components/AppBar';
-import { connect } from 'react-redux';
-import Save from '@material-ui/icons/Save';
-import { diff } from 'deep-object-diff';
-import StarRatings from '../components/StarRatings';
-import ChevronLeft from '@material-ui/icons/ChevronLeft';
-import ChevronRight from '@material-ui/icons/ChevronRight';
+import React, { Component } from "react";
+import {
+  Button,
+  Grid,
+  TextField,
+  IconButton,
+  Icon,
+  Typography
+} from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import AppBar from "../components/AppBar";
+import { connect } from "react-redux";
+import makeRequestApiActionThread from "../actions/apiRequest";
 
 const styles = {
   container: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column"
   },
   chevrons: {
-    left: '50%',
-    transform: 'translateX(-50%)',
+    left: "50%",
+    transform: "translateX(-50%)"
   },
-  ratingsGridItem: {
-  },
+  ratingsGridItem: {}
 };
 
 class SessionDetails extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      updatedAttributes: {
-        id: '001',
-        isActive: true,
+    this.state = {};
 
-      },
-    };
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const playerDiffBetweenPrevStateAndCurrState = diff(prevState.updatedAttributes, this.state.updatedAttributes);
-    if (Object.keys(playerDiffBetweenPrevStateAndCurrState).length > 0) {
-      const playerDiff = diff(this.props.player, this.state.updatedAttributes);
-      this.setState({ isDirty: Object.keys(playerDiff).length > 0 });
-    }
+    this.props.dispatch(
+      makeRequestApiActionThread(
+        "GET",
+        "/sessions",
+        undefined,
+        "REPLACE",
+        "sessions"
+      )
+    );
+    this.props.dispatch(
+      makeRequestApiActionThread(
+        "GET",
+        "/communities",
+        undefined,
+        "REPLACE",
+        "communities"
+      )
+    );
   }
 
   setUpdatedAttributes(updatedAttributes) {
     this.setState({
       updatedAttributes: {
         ...this.state.updatedAttributes,
-        ...updatedAttributes,
+        ...updatedAttributes
       }
     });
   }
-
-  handleNameTextfieldChange(e) {
-    this.setUpdatedAttributes({
-        name: e.currentTarget.value,
-      });
-  }
-
-  handleEditRatings(ratingsChange) {
-    this.setUpdatedAttributes({
-      ratings: this.state.updatedAttributes.ratings + ratingsChange,
-    });
-  }
-
   render() {
-    const { classes } = this.props;
-    const title = this.props.match.params.id !== 'new' ? this.props.player.name : 'Current Session';
+    const { classes, match } = this.props;
+    if (!this.props.session) {
+      return <div />;
+    }
+    console.log(this.props.session);
     return (
       <div className={classes.container}>
-        <AppBar title={title} rightButton={{
-          icon: <Save />,
-          onClick: () => alert('clicked'),
-          disabled: !this.state.isDirty,
-        }}/>
+        <AppBar title={"Sessions"} />
         <Grid container spacing={24} alignItems="center">
           <Grid item xs={12}>
-            <Typography variant="display1">New session has started</Typography>
-            <Typography variant="subheading">Rate player's performance for this game. 
-            Your ratings will help us get some insight of the players performance trend and adjust the ratings overtime.</Typography>
+            <Typography variant="display1">{`Session #${match.params.id}`}</Typography>
+            <Typography variant="subheading">
+              Rate player's performance for this game. Your ratings will help us
+              get some insight of the players performance trend and adjust the
+              ratings overtime.
+            </Typography>
           </Grid>
         </Grid>
       </div>
@@ -87,13 +83,14 @@ class SessionDetails extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  player: Object.values(state.players).find(player => player.id === ownProps.match.params.id) || {},
+  session: Object.values(state.sessions).find(
+    session => session.id == ownProps.match.params.id
+  )
 });
 
-const mapDispatchToProps = dispatch => ({
-  
-});
+const mapDispatchToProps = dispatch => ({ dispatch });
 
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SessionDetails));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(SessionDetails));
