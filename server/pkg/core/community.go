@@ -19,11 +19,12 @@ type Community struct {
 }
 
 // CommunityCore is the core logic of the community repo
+// Dependencies of this package are injected here.
 type CommunityCore struct {
 	CommunityRepo CommunityRepo
 }
 
-// CommunityFilter is the filter that the GetCommunities DAL use to filter its results
+// CommunityFilter is the filter that the GetCommunities database layer use to filter its results
 type CommunityFilter struct {
 	// ID is used to obtain a single community by ID
 	ID []string
