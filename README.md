@@ -44,7 +44,7 @@ Database Schema:
 - id: int
 - rating_gain: int
 - user_id (FK): int
-- session_id (FK): **NOT IMPLEMENTED**
+- session_id (FK): int
 
 ## SessionPlayer
 - id: int
