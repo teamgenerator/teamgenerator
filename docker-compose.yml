@@ -52,8 +52,7 @@ services:
 
   server:
     restart: always
-    build:
-      context: server
+    image: niczter/teamgenerator:1.0.1
     container_name: server
     ports:
       - "3030:3030"
