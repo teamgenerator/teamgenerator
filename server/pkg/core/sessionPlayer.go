@@ -11,21 +11,21 @@ import (
 
 // SessionPlayer is the internal representation of the SessionPlayer object
 type SessionPlayer struct {
-	ID          int
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
-	PlayerID    int
-	CommunityID int
-	Rating      int
-	Form        int
-	FormChange  int
-	Type        string
+	ID         int
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
+	PlayerID   int
+	SessionID  int
+	Rating     int
+	Form       int
+	FormChange int
+	Type       string
 }
 
 // SessionPlayerCore is the core logic of the sessionPlayers repo
 type SessionPlayerCore struct {
 	SessionPlayerRepo SessionPlayerRepo
-	CommunityRepo     CommunityRepo
+	SessionRepo       SessionRepo
 	PlayerRepo        PlayerRepo
 }
 
@@ -41,7 +41,7 @@ type SessionPlayerRepo interface {
 	// This function should accept a SessionPlayerFilter and returns the filtered results
 	Get(filter SessionPlayerFilter) ([]models.SessionPlayer, error)
 	// Creates a sessionPlayers given a name and location
-	Create(playerID, communityID, rating, form, formChange int) (*models.SessionPlayer, error)
+	Create(playerID, sessionID, rating, form, formChange int) (*models.SessionPlayer, error)
 	// Deletes a sessionPlayers given ID
 	Delete(ID string) (*models.SessionPlayer, error)
 }
@@ -72,15 +72,15 @@ func (c *SessionPlayerCore) GetSessionPlayers() ([]SessionPlayer, error) {
 	return parsedCommunities, nil
 }
 
-// CreateSessionPlayer creates a single communtiy given a name and location
-func (c *SessionPlayerCore) CreateSessionPlayer(playerID, communityID, rating, form, formChange int) (*SessionPlayer, error) {
+// CreateSessionPlayer creates a single sessionPlayer given a name and location
+func (c *SessionPlayerCore) CreateSessionPlayer(playerID, sessionID, rating, form, formChange int) (*SessionPlayer, error) {
 	var sb strings.Builder
 
 	if playerID == 0 {
 		sb.WriteString("- playerID must be provided\n")
 	}
-	if communityID == 0 {
-		sb.WriteString("- communityID must be provided\n")
+	if sessionID == 0 {
+		sb.WriteString("- sessionID must be provided\n")
 	}
 	if errMsg := sb.String(); errMsg != "" {
 		errMsg = fmt.Sprintf("Error validating query params: \n%s", errMsg)
@@ -99,18 +99,18 @@ func (c *SessionPlayerCore) CreateSessionPlayer(playerID, communityID, rating, f
 		return nil, ErrPlayerNotFound
 	}
 
-	communityFilter := CommunityFilter{
-		ID: []string{strconv.Itoa(communityID)},
+	sessionFilter := SessionFilter{
+		ID: []string{strconv.Itoa(sessionID)},
 	}
-	community, err := c.CommunityRepo.Get(communityFilter)
+	session, err := c.SessionRepo.Get(sessionFilter)
 	if err != nil {
 		return nil, err
 	}
-	if community == nil || len(community) < 1 {
-		return nil, ErrCommunityNotFound
+	if session == nil || len(session) < 1 {
+		return nil, ErrSessionNotFound
 	}
 
-	sessionPlayers, err := c.SessionPlayerRepo.Create(playerID, communityID, rating, form, formChange)
+	sessionPlayers, err := c.SessionPlayerRepo.Create(playerID, sessionID, rating, form, formChange)
 	if err != nil {
 		return nil, err
 	}
@@ -132,15 +132,15 @@ func castSessionPlayers(sessionPlayerss []models.SessionPlayer) []SessionPlayer 
 	var parsedCommunities []SessionPlayer
 	for _, v := range sessionPlayerss {
 		newSessionPlayer := SessionPlayer{
-			ID:          v.ID,
-			CreatedAt:   v.CreatedAt,
-			UpdatedAt:   v.UpdatedAt,
-			PlayerID:    v.PlayerID,
-			CommunityID: v.CommunityID,
-			Rating:      v.Rating,
-			Form:        v.Form,
-			FormChange:  v.FormChange,
-			Type:        "sessionPlayer",
+			ID:         v.ID,
+			CreatedAt:  v.CreatedAt,
+			UpdatedAt:  v.UpdatedAt,
+			PlayerID:   v.PlayerID,
+			SessionID:  v.SessionID,
+			Rating:     v.Rating,
+			Form:       v.Form,
+			FormChange: v.FormChange,
+			Type:       "sessionPlayer",
 		}
 		parsedCommunities = append(parsedCommunities, newSessionPlayer)
 	}

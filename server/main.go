@@ -83,7 +83,7 @@ func main() {
 	sessionPlayerRepo := database.SessionPlayerRepo{}
 	sessionPlayerCore := core.SessionPlayerCore{
 		SessionPlayerRepo: &sessionPlayerRepo,
-		CommunityRepo:     &communityRepo,
+		SessionRepo:       &sessionRepo,
 		PlayerRepo:        &playerRepo,
 	}
 	sessionPlayerHandler := handler.SessionPlayerHandler{
@@ -141,7 +141,7 @@ func migrateModels() {
 func addRelations() {
 	db.DB.Model(&models.Player{}).AddForeignKey("community_id", "communities(id)", "CASCADE", "CASCADE")
 	db.DB.Model(&models.Session{}).AddForeignKey("community_id", "communities(id)", "CASCADE", "CASCADE")
-	db.DB.Model(&models.SessionPlayer{}).AddForeignKey("community_id", "communities(id)", "CASCADE", "CASCADE")
+	db.DB.Model(&models.SessionPlayer{}).AddForeignKey("session_id", "sessions(id)", "CASCADE", "CASCADE")
 	db.DB.Model(&models.SessionPlayer{}).AddForeignKey("player_id", "players(id)", "CASCADE", "CASCADE")
 	db.DB.Model(&models.Rating{}).AddForeignKey("player_id", "players(id)", "CASCADE", "CASCADE")
 	db.DB.Model(&models.Rating{}).AddForeignKey("session_id", "sessions(id)", "CASCADE", "CASCADE")

@@ -43,18 +43,18 @@ func (h *SessionPlayerHandler) GetSessionPlayer(w http.ResponseWriter, r *http.R
 func (h *SessionPlayerHandler) CreateSessionPlayer(w http.ResponseWriter, r *http.Request) {
 	var session models.SessionPlayer
 	json.NewDecoder(r.Body).Decode(&session)
-	createdSessionPlayer, err := h.SessionPlayerCore.CreateSessionPlayer(session.PlayerID, session.CommunityID, session.Rating, session.Form, session.FormChange)
+	createdSessionPlayer, err := h.SessionPlayerCore.CreateSessionPlayer(session.PlayerID, session.SessionID, session.Rating, session.Form, session.FormChange)
 	switch {
 	case err == nil:
 		json.NewEncoder(w).Encode(&createdSessionPlayer)
-	case errors.Is(err, core.ErrInvalidInputParams), errors.Is(err, core.ErrCommunityNotFound), errors.Is(err, core.ErrPlayerNotFound):
+	case errors.Is(err, core.ErrInvalidInputParams), errors.Is(err, core.ErrSessionNotFound), errors.Is(err, core.ErrPlayerNotFound):
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	default:
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
-// DeleteSessionPlayer function to delete a single communtiy by ID
+// DeleteSessionPlayer function to delete a single sessionPlayer by ID
 func (h *SessionPlayerHandler) DeleteSessionPlayer(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	createdSessionPlayer, err := h.SessionPlayerCore.DeleteSessionPlayer(params["id"])
