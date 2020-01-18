@@ -33,13 +33,13 @@ func (r *SessionPlayerRepo) Get(filter core.SessionPlayerFilter) ([]models.Sessi
 }
 
 // Create function to create a single session
-func (r *SessionPlayerRepo) Create(playerID, communityID, rating, form, formChange int) (*models.SessionPlayer, error) {
+func (r *SessionPlayerRepo) Create(playerID, sessionID, rating, form, formChange int) (*models.SessionPlayer, error) {
 	session := models.SessionPlayer{
-		PlayerID:    playerID,
-		CommunityID: communityID,
-		Rating:      rating,
-		Form:        form,
-		FormChange:  formChange,
+		PlayerID:   playerID,
+		SessionID:  sessionID,
+		Rating:     rating,
+		Form:       form,
+		FormChange: formChange,
 	}
 	var createdSessionPlayer models.SessionPlayer
 	result := db.DB.Create(&session).Scan(&createdSessionPlayer)
