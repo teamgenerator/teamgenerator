@@ -9,7 +9,7 @@
     "change-case": "^4.1.1",
     "deep-object-diff": "^1.1.0",
     "gh-pages": "^1.2.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "pluralize": "^8.0.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
